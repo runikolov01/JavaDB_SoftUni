@@ -104,7 +104,14 @@ SELECT * FROM departments;
 -- 20. Increase Salaries
 UPDATE employees AS e
 SET salary = salary * 1.12
-WHERE department_id IN (10, 20, 30, 40);
+WHERE department_id IN (1, 2, 4, 11);
 
 SELECT salary
 FROM employees;
+
+USE geography;
+-- 21. All Mountain Peaks
+SELECT * FROM peaks;
+
+SELECT peak_name FROM peaks
+ORDER BY peak_name ASC;
