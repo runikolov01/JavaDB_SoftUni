@@ -98,3 +98,13 @@ SELECT first_name, last_name, hire_date
 FROM employees
 ORDER BY hire_date DESC
 LIMIT 7;
+
+SELECT * FROM departments;
+
+-- 20. Increase Salaries
+UPDATE employees AS e
+SET salary = salary * 1.12
+WHERE department_id IN (10, 20, 30, 40);
+
+SELECT salary
+FROM employees;
