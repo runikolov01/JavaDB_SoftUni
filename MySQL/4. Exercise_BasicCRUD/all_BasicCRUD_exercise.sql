@@ -87,3 +87,9 @@ SELECT * FROM v_employees_job_titles;
 -- 17. Distinct Job Titles
 SELECT DISTINCT job_title FROM employees
 ORDER BY job_title ASC;
+
+-- 18. Find First 10 Started Projects
+SELECT * FROM projects
+ORDER BY start_date ASC, name ASC
+LIMIT 10;
+
