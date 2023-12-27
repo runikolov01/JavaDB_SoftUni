@@ -77,4 +77,9 @@ CREATE VIEW v_employees_salaries AS
 SELECT first_name, last_name, salary FROM employees;
 SELECT * FROM v_employees_salaries;
 
-DROP VIEW v_employees_salaries;
+-- 16. Create View Employees with Job Titles 
+CREATE VIEW v_employees_job_titles AS
+SELECT CONCAT_WS(' ', first_name, middle_name, last_name) 
+AS 'full name', job_title
+FROM employees;
+SELECT * FROM v_employees_job_titles;
