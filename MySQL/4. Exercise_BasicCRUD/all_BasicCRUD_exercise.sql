@@ -30,3 +30,30 @@ WHERE job_title = "Sales Representative"
 ORDER BY employee_id;
 
 -- 08. Find Names of All Employees by Salary in Range
+SELECT first_name, last_name, job_title 
+FROM employees
+WHERE salary BETWEEN 20000 AND 30000
+ORDER BY employee_id;
+
+-- 9. Find Names of All Employees
+SELECT CONCAT_WS(' ', first_name, middle_name, last_name)
+AS 'Full Name'
+FROM employees
+WHERE salary IN(25000, 14000, 12500, 23600);
+
+-- 10. Find All Employees Without Manager
+SELECT first_name, last_name
+FROM employees
+WHERE manager_id IS NULL;
+
+-- 11. Find All Employees with salary More Than 50000 
+SELECT first_name, last_name, salary
+FROM employees
+WHERE salary > 50000
+ORDER BY salary DESC;
+ 
+-- 12. Find 5 Best Paid Employees 
+SELECT first_name, last_name
+FROM employees
+ORDER BY salary DESC
+LIMIT 5;
