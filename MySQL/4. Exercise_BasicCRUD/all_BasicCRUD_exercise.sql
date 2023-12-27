@@ -69,5 +69,12 @@ ORDER BY
 	salary DESC, 
 	first_name ASC, 
     last_name DESC,
-    middle_name ASC
+    middle_name ASC,
+    employee_id ASC;
     
+-- 15. Create View Employees with Salaries
+CREATE VIEW v_employees_salaries AS
+SELECT first_name, last_name, salary FROM employees;
+SELECT * FROM v_employees_salaries;
+
+DROP VIEW v_employees_salaries;
