@@ -160,7 +160,7 @@ WHERE
 SELECT 
     salary
 FROM
-    employees
+    employees;
 
 USE geography;
 -- 21. All Mountain Peaks
