@@ -183,9 +183,9 @@ ORDER BY population DESC , country_name ASC
 LIMIT 30;
 
 -- 23. Countries and Currency (Euro / Not Euro)
-use geography;
+-- use geography;
 SELECT country_name, country_code,
-IF(currency_code = 'EUR', 'Euro', 'Not Euro')
+IF(currency_code = 'EUR', 'Euro', 'Not Euro') AS 'currency'
 FROM countries
 ORDER BY country_name ASC;
 
