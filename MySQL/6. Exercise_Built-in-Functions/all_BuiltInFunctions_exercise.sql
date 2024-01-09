@@ -19,3 +19,9 @@ SELECT first_name, last_name
 FROM employees
 WHERE job_title NOT LIKE '%engineer%'
 ORDER BY employee_id;
+
+-- 05. Find Towns with Name Length
+SELECT `name`
+FROM `towns`
+WHERE LENGTH(`name`) = 5 OR LENGTH(`name`) = 6
+ORDER BY name ASC;
