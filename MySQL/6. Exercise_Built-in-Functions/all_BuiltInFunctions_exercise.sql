@@ -25,3 +25,9 @@ SELECT `name`
 FROM `towns`
 WHERE LENGTH(`name`) = 5 OR LENGTH(`name`) = 6
 ORDER BY name ASC;
+
+-- 06. Find Towns Starting With
+SELECT `town_id`, `name`
+FROM `towns`
+WHERE `name` REGEXP('^[M|K|B|E]')
+ORDER BY name ASC;
