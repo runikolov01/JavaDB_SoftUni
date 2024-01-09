@@ -37,3 +37,13 @@ SELECT `town_id`, `name`
 FROM `towns`
 WHERE `name` REGEXP('^[^R|B|D]')
 ORDER BY name ASC;
+
+-- 08. Create View Employees Hired After
+CREATE VIEW v_employees_hired_after_2000 AS
+SELECT 
+    first_name, last_name
+FROM
+    employees
+WHERE YEAR(hire_date) > 2000;
+
+SELECT * FROM v_employees_hired_after_2000;
