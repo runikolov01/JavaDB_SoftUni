@@ -164,7 +164,7 @@ FROM
 
 USE geography;
 -- 21. All Mountain Peaks
-SELECT * FROM peaks;
+-- SELECT * FROM peaks;
 
 SELECT 
     peak_name
