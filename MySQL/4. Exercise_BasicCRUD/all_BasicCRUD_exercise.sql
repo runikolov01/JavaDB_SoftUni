@@ -140,7 +140,7 @@ SELECT
 FROM
     projects
 ORDER BY start_date ASC , name ASC
-LIMIT 10
+LIMIT 10;
 
 -- 19. Last 7 Hired Employees
 SELECT 
