@@ -175,7 +175,7 @@ SELECT
     peak_name
 FROM
     peaks
-ORDER BY peak_name ASC
+ORDER BY peak_name ASC;
 
 -- 22. Biggest Countries by Population
 SELECT 
