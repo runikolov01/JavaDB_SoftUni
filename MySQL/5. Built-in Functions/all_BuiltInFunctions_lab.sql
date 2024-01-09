@@ -16,3 +16,9 @@ SELECT ROUND(SUM(cost), 2) FROM books;
 -- 04. Days Lived
 SELECT CONCAT(first_name, ' ', last_name) AS 'Full Name', TIMESTAMPDIFF(DAY, born, died) AS 'Days Lived'
 FROM authors;
+
+-- 05. Harry Potter Books
+SELECT title 
+FROM books
+WHERE title REGEXP '^Harry Potter'
+ORDER BY id;
