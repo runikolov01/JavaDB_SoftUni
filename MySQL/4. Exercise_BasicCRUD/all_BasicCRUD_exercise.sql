@@ -132,7 +132,7 @@ SELECT DISTINCT
     job_title
 FROM
     employees
-ORDER BY job_title ASC
+ORDER BY job_title ASC;
 
 -- 18. Find First 10 Started Projects
 SELECT 
