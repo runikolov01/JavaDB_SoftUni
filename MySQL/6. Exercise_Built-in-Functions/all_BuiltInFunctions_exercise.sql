@@ -52,3 +52,10 @@ SELECT * FROM v_employees_hired_after_2000;
 SELECT first_name, last_name
 FROM employees
 WHERE character_length(last_name) = 5;
+
+USE geography;
+-- 10. Countries Holding 'A'
+SELECT country_name, iso_code
+FROM countries
+WHERE country_name REGEXP '(a.*){3}'
+ORDER BY iso_code;
