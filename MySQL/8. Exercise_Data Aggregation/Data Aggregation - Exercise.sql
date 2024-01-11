@@ -109,3 +109,15 @@ WHERE
     `deposit_start_date` > '1985-01-01'
 GROUP BY `deposit_group` , `is_deposit_expired`
 ORDER BY `deposit_group` DESC , `is_deposit_expired` ASC;
+
+USE soft_uni;
+-- 12. Employees Minimum Salaries
+SELECT 
+    department_id, MIN(salary)
+FROM
+    employees
+WHERE
+    `hire_date` > '2000-01-01'
+GROUP BY department_id
+HAVING department_id IN (2 , 5, 7)
+ORDER BY department_id;
