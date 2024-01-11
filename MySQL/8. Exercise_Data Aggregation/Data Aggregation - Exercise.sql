@@ -34,3 +34,7 @@ ORDER BY deposit_group;
 SELECT *
 FROM wizzard_deposits
 
+-- 07. Deposits Filter
+SELECT deposit_group, SUM(deposit_amount) AS `total_sum`
+FROM wizzard_deposits
+
