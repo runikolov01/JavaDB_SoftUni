@@ -2,13 +2,13 @@
 SELECT 
     COUNT(*) AS `count`
 FROM
-    `wizzard_deposits`;
+    `wizzard_deposits`
 
 -- 02. Longest Magic Wand
 SELECT 
     MAX(magic_wand_size) AS `longest_magic_wand`
 FROM
-    `wizzard_deposits`;
+    `wizzard_deposits`
 
 -- 03. Longest Magic Wand per Deposit Groups
 SELECT 
@@ -16,7 +16,7 @@ SELECT
 FROM
     `wizzard_deposits`
 GROUP BY deposit_group
-ORDER BY longest_magic_wand ASC , deposit_group ASC;
+ORDER BY longest_magic_wand ASC , deposit_group ASC
 
 -- 04. Smallest Deposit Group per Magic Wand Size
 SELECT 
@@ -25,7 +25,7 @@ FROM
     wizzard_deposits
 GROUP BY deposit_group
 ORDER BY AVG(magic_wand_size) ASC
-LIMIT 1;
+LIMIT 1
 
 -- 05. Deposits Sum
 SELECT 
@@ -33,7 +33,7 @@ SELECT
 FROM
     wizzard_deposits
 GROUP BY deposit_group
-ORDER BY total_sum;
+ORDER BY total_sum
 
 -- 06. Deposits Sum for Ollivander Family
 SELECT 
@@ -43,12 +43,12 @@ FROM
 WHERE
     magic_wand_creator = 'Ollivander family'
 GROUP BY deposit_group
-ORDER BY deposit_group;
+ORDER BY deposit_group
 
 SELECT 
     *
 FROM
-    wizzard_deposits;
+    wizzard_deposits
 
 -- 07. Deposits Filter
 SELECT 
@@ -59,7 +59,7 @@ WHERE
     magic_wand_creator = 'Ollivander family'
 GROUP BY deposit_group
 HAVING total_sum < 150000
-ORDER BY total_sum DESC;
+ORDER BY total_sum DESC
 
 -- 08. Deposit Charge
 SELECT 
@@ -69,7 +69,7 @@ SELECT
 FROM
     wizzard_deposits
 GROUP BY `magic_wand_creator` , `deposit_group`
-ORDER BY `magic_wand_creator` , `deposit_group`;
+ORDER BY `magic_wand_creator` , `deposit_group`
 
 -- 09. Age Groups
 SELECT 
@@ -86,4 +86,14 @@ SELECT
 FROM
     `wizzard_deposits`
 GROUP BY `age_group`
-ORDER BY `wizzard_count`;
+ORDER BY `wizzard_count`
+
+-- 10. First Letter
+SELECT 
+    LEFT(`first_name`, 1) AS 'first_letter'
+FROM
+    `wizzard_deposits`
+WHERE
+    `deposit_group` = 'Troll Chest'
+GROUP BY `first_letter`
+ORDER BY `first_letter`
