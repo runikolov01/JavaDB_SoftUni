@@ -166,6 +166,20 @@ FROM
 WHERE
     manager_id IS NULL;
     
+-- 16. 3rd Highest Salary
+SELECT DISTINCT `department_id`, (
+-- Взимане на третата най-висока заплата:
+SELECT DISTINCT `salary`
+FROM `employees` e1
+  WHERE e1.`department_id` = `employees`.`department_id`
+    ORDER BY `salary` DESC
+    LIMIT 1 OFFSET 2
+) AS `third_highest_salary`
+FROM
+    `employees`
+    HAVING `third_highest_salary` IS NOT NULL
+ORDER BY  `department_id`;
+    
 -- 17. Salary Challenge
 SELECT 
     `first_name`, `last_name`, `department_id`
