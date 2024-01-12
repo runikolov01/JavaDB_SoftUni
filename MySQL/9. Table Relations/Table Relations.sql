@@ -30,3 +30,14 @@ SELECT
     *
 FROM
     peaks;
+    
+-- 2. Trip Organization
+USE camp;
+SELECT 
+    driver_id,
+    vehicle_type,
+    CONCAT(first_name, ' ', last_name) AS 'driver_name'
+FROM
+    vehicles
+        JOIN
+    campers ON driver_id = campers.id;
