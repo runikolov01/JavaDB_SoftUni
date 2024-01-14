@@ -45,3 +45,23 @@ FROM employees
 WHERE departments.name IN ('Finance', 'Sales')
   AND hire_date > '1999-01-01'
 ORDER BY hire_date ASC;
+
+-- 07. Employees with Project
+SELECT ep.employee_id, e.first_name, projects.name AS 'project_name'
+FROM employees_projects AS ep
+         JOIN projects ON ep.project_id = projects.project_id
+         JOIN employees AS e ON ep.employee_id = e.employee_id
+WHERE DATE(projects.start_date) > '2002-08-13'
+  AND end_date IS NULL
+ORDER BY first_name, project_name ASC
+LIMIT 5;
+
+-- ВТОРИ НАЧИН:
+SELECT e.employee_id, e.first_name, p.name AS 'project_name'
+FROM employees e
+         JOIN employees_projects AS ep ON e.employee_id = ep.employee_id
+         JOIN projects AS p ON ep.project_id = p.project_id
+WHERE DATE(p.start_date) > '2002-08-13'
+  AND p.end_date IS NULL
+ORDER BY e.first_name, p.name
+LIMIT 5;
