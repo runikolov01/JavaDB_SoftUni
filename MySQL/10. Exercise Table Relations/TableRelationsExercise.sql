@@ -155,3 +155,18 @@ CREATE TABLE agenda (
     CONSTRAINT fk_agenda_subjects FOREIGN KEY (subject_id)
         REFERENCES subjects (subject_id)
 );
+
+-- 09. Peaks in Rila
+USE geography;
+SELECT * FROM mountains;
+SELECT * FROM peaks;
+
+SELECT 
+    mountain_range, peak_name, elevation AS 'peak_elevation'
+FROM
+    mountains
+        JOIN
+    peaks ON mountains.id = peaks.mountain_id
+WHERE
+    mountains.mountain_range = 'Rila'
+ORDER BY `peak_elevation` DESC;
