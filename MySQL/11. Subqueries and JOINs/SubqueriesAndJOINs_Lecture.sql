@@ -1,0 +1,24 @@
+-- 1. Managers
+SELECT 
+    employee_id,
+    CONCAT(first_name, ' ', last_name) AS 'full_name',
+    d.department_id,
+    d.name AS 'department_name'
+FROM
+    departments AS d
+        INNER JOIN
+    employees AS e ON d.manager_id = e.employee_id
+ORDER BY employee_id
+LIMIT 5;
+
+SELECT 
+    *
+FROM
+    employees
+WHERE
+    manager_id IS NOT NULL;
+
+SELECT 
+    *
+FROM
+    departments;
