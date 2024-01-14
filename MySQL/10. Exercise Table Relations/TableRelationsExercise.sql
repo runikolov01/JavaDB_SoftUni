@@ -162,11 +162,11 @@ SELECT * FROM mountains;
 SELECT * FROM peaks;
 
 SELECT 
-    mountain_range, peak_name, elevation AS 'peak_elevation'
+    m.mountain_range, p.peak_name, p.elevation AS 'peak_elevation'
 FROM
-    mountains
+    mountains AS m
         JOIN
-    peaks ON mountains.id = peaks.mountain_id
+    peaks AS p ON m.id = p.mountain_id
 WHERE
-    mountains.mountain_range = 'Rila'
+    m.mountain_range = 'Rila'
 ORDER BY `peak_elevation` DESC;
