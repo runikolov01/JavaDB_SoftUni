@@ -1010,7 +1010,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="293" parent="1" name="geography">
-      <LastIntrospectionLocalTimestamp>2024-01-14.17:01:27</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-01-14.17:02:39</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
     <schema id="294" parent="1" name="gringotts">
@@ -1041,7 +1041,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="303" parent="1" name="soft_uni">
-      <LastIntrospectionLocalTimestamp>2024-01-14.17:01:27</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-01-14.17:03:00</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb3_general_ci</CollationName>
     </schema>
     <schema id="304" parent="1" name="sys">
