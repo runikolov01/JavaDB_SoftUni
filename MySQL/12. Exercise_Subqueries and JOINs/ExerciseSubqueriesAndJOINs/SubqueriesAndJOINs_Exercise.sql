@@ -37,3 +37,11 @@ FROM employees AS e
 WHERE ep.project_id IS NULL
 ORDER BY e.employee_id DESC
 LIMIT 3;
+
+-- 06. Employees Hired After
+SELECT employees.first_name, employees.last_name, employees.hire_date, departments.name AS 'dept_name'
+FROM employees
+         JOIN departments ON employees.department_id = departments.department_id
+WHERE departments.name IN ('Finance', 'Sales')
+  AND hire_date > '1999-01-01'
+ORDER BY hire_date ASC;
