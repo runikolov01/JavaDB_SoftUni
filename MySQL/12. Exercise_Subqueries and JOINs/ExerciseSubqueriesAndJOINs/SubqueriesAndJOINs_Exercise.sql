@@ -21,3 +21,5 @@ FROM employees AS e
               ON e.department_id = d.department_id
 WHERE d.name = 'Sales'
 ORDER BY employee_id DESC;
+
+-- 04. Employee Departments
