@@ -109,3 +109,13 @@ SELECT AVG(e.salary) AS 'avg_salary'
 FROM employees AS e
 GROUP BY e.department_id
 LIMIT 1;
+
+USE geography;
+-- 12. Highest Peaks in Bulgaria
+SELECT mountains_countries.country_code, mountains.mountain_range, peaks.peak_name, peaks.elevation
+FROM mountains_countries
+         JOIN mountains ON mountains_countries.mountain_id = mountains.id
+         JOIN peaks ON mountains.id = peaks.mountain_id
+WHERE mountains_countries.country_code = 'BG'
+  AND elevation > 2835
+ORDER BY elevation DESC;
