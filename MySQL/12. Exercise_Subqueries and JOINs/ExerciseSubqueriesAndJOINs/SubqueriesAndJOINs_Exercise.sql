@@ -108,6 +108,7 @@ LIMIT 5;
 SELECT AVG(e.salary) AS 'avg_salary'
 FROM employees AS e
 GROUP BY e.department_id
+ORDER BY avg_s
 LIMIT 1;
 
 USE geography;
