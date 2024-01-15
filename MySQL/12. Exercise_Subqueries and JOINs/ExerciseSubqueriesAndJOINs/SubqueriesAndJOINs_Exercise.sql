@@ -156,3 +156,17 @@ SELECT COUNT(c.country_code) AS country_count
 FROM countries AS c
          LEFT JOIN mountains_countries AS m_c ON c.country_code = m_c.country_code
 WHERE m_c.mountain_id IS NULL;
+
+-- 17. Highest Peak and Longest River by Country
+SELECT countries.country_name,
+       MAX(peaks.elevation) AS `highest_peak_elevation`,
+       MAX(rivers.length)   AS `longest_river_length`
+FROM countries
+         JOIN countries_rivers ON countries.country_code = countries_rivers.country_code
+         JOIN rivers ON countries_rivers.river_id = rivers.id
+         JOIN mountains_countries ON countries.country_code = mountains_countries.country_code
+         JOIN mountains ON mountains_countries.mountain_id = mountains.id
+         JOIN peaks ON mountains.id = peaks.mountain_id
+GROUP BY country_name
+ORDER BY highest_peak_elevation DESC, longest_river_length DESC
+LIMIT 5;
