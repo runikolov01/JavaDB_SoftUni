@@ -150,3 +150,9 @@ HAVING currency_usage > 1
                          ORDER BY count_of_currencies DESC
                          LIMIT 1)
 ORDER BY c.continent_code, c.currency_code;
+
+-- 16. Countries without any Mountains
+SELECT COUNT(c.country_code) AS country_count
+FROM countries AS c
+         LEFT JOIN mountains_countries AS m_c ON c.country_code = m_c.country_code
+WHERE m_c.mountain_id IS NULL;
