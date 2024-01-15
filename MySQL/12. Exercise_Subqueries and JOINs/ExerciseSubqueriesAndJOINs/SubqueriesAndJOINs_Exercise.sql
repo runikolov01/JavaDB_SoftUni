@@ -128,3 +128,12 @@ FROM geography.mountains_countries
 WHERE mountains_countries.country_code IN ('US', 'RU', 'BG')
 GROUP BY mountains_countries.country_code
 ORDER BY `mountain_range` DESC;
+
+-- 14. Countries with Rivers
+SELECT countries.country_name, rivers.river_name
+FROM countries
+         LEFT JOIN countries_rivers ON countries.country_code = countries_rivers.country_code
+         LEFT JOIN rivers ON countries_rivers.river_id = rivers.id
+where continent_code = 'AF'
+ORDER BY countries.country_name ASC
+LIMIT 5;
