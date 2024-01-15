@@ -91,3 +91,15 @@ WHERE
     e.manager_id IN (3, 7)
 ORDER BY
     e.first_name ASC;
+
+-- 10. Employee Summary
+SELECT employees.employee_id,
+       CONCAT(employees.first_name, ' ', employees.last_name) AS 'employee_name',
+       CONCAT(m.first_name, ' ', m.last_name)                 AS 'manager_name',
+       departments.name
+FROM employees
+         JOIN
+     employees m ON employees.manager_id = m.employee_id
+         JOIN departments ON employees.department_id = departments.department_id
+ORDER BY employee_id ASC
+LIMIT 5;
