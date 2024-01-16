@@ -1,5 +1,5 @@
 USE soft_uni;
--- 13. Database Programmability and Transactions
+-- 1. Count Employees by Town
 DELIMITER $$
 CREATE FUNCTION ufn_count_employees_by_town(`town_name` VARCHAR(50))
     RETURNS INT
