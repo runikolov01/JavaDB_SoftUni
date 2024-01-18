@@ -72,3 +72,15 @@ BEGIN
     ORDER BY first_name DESC, last_name DESC;
 END$$
 DELIMITER ;
+
+-- 07. Define Function
+DELIMITER $$
+CREATE FUNCTION ufn_is_word_comprised(set_of_letters varchar(50), word varchar(50))
+    RETURNS VARCHAR(10)
+BEGIN
+    DECLARE result INT;
+    set RESULT := (
+        word REGEXP (CONCAT('^[', set_of_letters, ']+$'))
+        );
+    RETURN result;
+END$$
