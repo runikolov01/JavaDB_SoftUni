@@ -1,4 +1,6 @@
 USE soft_uni;
+SET GLOBAL log_bin_trust_function_creators = 1; -- Приема  в себе си 0 или 1, защото тя съдържа в себе си boolean. Глобално слагаме променливата. Правим го, за да предотвратим бъдещи грешки при работа с функции/процедури и т.н.
+SET SQL_SAFE_UPDATES = 0;
 
 -- 01. Employees with Salary Above 35000
 DELIMITER $$
