@@ -10,3 +10,16 @@ SELECT first_name, last_name FROM employees
 WHERE salary > 35000
 ORDER BY first_name ASC, last_name ASC, employee_id ASC;
 END$$
+DELIMITER ;
+
+-- 02. Employees with Salary Above Number
+DELIMITER $$
+CREATE PROCEDURE usp_get_employees_salary_above(salary_number DECIMAL(19, 4))
+BEGIN
+    SELECT employees.first_name, employees.last_name
+    FROM employees
+
+    WHERE salary >= salary_number
+    ORDER BY first_name ASC, last_name ASC, employee_id ASC;
+END$$
+DELIMITER ;
