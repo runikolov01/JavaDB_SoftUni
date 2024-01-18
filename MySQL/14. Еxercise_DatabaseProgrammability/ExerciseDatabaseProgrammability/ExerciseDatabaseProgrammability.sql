@@ -5,10 +5,11 @@ SET SQL_SAFE_UPDATES = 0;
 -- 01. Employees with Salary Above 35000
 DELIMITER $$
 CREATE PROCEDURE usp_get_employees_salary_above_35000()
-    BEGIN
-SELECT first_name, last_name FROM employees
-WHERE salary > 35000
-ORDER BY first_name ASC, last_name ASC, employee_id ASC;
+BEGIN
+    SELECT first_name, last_name
+    FROM employees
+    WHERE salary > 35000
+    ORDER BY first_name ASC, last_name ASC, employee_id ASC;
 END$$
 DELIMITER ;
 
@@ -23,3 +24,13 @@ BEGIN
     ORDER BY first_name ASC, last_name ASC, employee_id ASC;
 END$$
 DELIMITER ;
+
+-- 03. Town Names Starting With
+DELIMITER $$
+CREATE PROCEDURE usp_get_towns_starting_with(string VARCHAR(50))
+BEGIN
+    SELECT towns.name
+    FROM towns
+    WHERE name LIKE CONCAT(string, '%')
+    ORDER BY name ASC;
+END$$
