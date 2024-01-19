@@ -114,3 +114,18 @@ CREATE FUNCTION ufn_calculate_future_value(initial_sum DECIMAL(19, 4), interest_
                                            number_of_years INT)
     RETURNS DECIMAL(19, 4)
     RETURN initial_sum * POW((1 + interest_rate_per_yeat), number_of_years);
+
+-- 11. Calculating Interest
+DELIMITER $$
+CREATE PROCEDURE usp_calculate_future_value_for_account(account_id INT, interest_per_year DECIMAL(19, 4))
+BEGIN
+    SELECT ah.id,
+           ah.first_name,
+           ah.last_name,
+           a.balance                                                   AS current_balance,
+           ufn_calculate_future_value(a.balance, interest_per_year, 5) AS balance_in_5_years
+    FROM accounts AS a
+             JOIN account_holders ah on a.account_holder_id = ah.id
+    WHERE a.id = account_id;
+END$$
+DELIMITER ;
