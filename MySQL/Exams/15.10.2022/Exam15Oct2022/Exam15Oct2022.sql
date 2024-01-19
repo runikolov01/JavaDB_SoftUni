@@ -109,13 +109,31 @@ ORDER BY last_name DESC, id ASC
 LIMIT 5;
 
 -- 07. Accounts
-SELECT CONCAT(last_name, first_name, LENGTH(first_name), 'Restaurant') AS username,  REVERSE(SUBSTRING(email, 2, 12)) AS password FROM waiters WHERE salary IS NOT NULL
+SELECT CONCAT(last_name, first_name, LENGTH(first_name), 'Restaurant') AS username,
+       REVERSE(SUBSTRING(email, 2, 12))                                AS password
+FROM waiters
+WHERE salary IS NOT NULL
 ORDER BY password DESC;
 
 -- 08. Top from menu
 SELECT id, name, COUNT(product_id) AS count
 FROM products
-JOIN orders_products op on products.id = op.product_id
+         JOIN orders_products op on products.id = op.product_id
 GROUP BY product_id, name
 HAVING count > 4
 ORDER BY count DESC, name ASC;
+
+-- 09. Availability
+SELECT t.id                AS table_id,
+       t.capacity,
+       COUNT(oc.client_id) AS count_clients,
+       (
+           IF(capacity > COUNT(oc.client_id), 'Free seats',
+              IF(capacity = COUNT(oc.client_id), 'Full', 'Extra seats'))
+           )               AS Availability
+FROM tables AS t
+         JOIN orders o on t.id = o.table_id
+         JOIN orders_clients oc on o.id = oc.order_id
+WHERE floor = 1
+GROUP BY t.id
+ORDER BY t.id DESC;
