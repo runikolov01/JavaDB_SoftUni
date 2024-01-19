@@ -84,3 +84,8 @@ INSERT INTO products(name, type, price)
             CEILING(0.01 * salary)
      FROM waiters
      WHERE id > 6);
+
+-- 03. Update
+UPDATE orders
+SET table_id = table_id - 1
+WHERE id BETWEEN 12 AND 23;
