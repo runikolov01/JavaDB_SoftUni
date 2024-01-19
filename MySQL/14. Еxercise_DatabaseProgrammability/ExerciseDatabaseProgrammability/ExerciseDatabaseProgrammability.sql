@@ -95,3 +95,16 @@ BEGIN
     ORDER BY full_name;
 END$$
 DELIMITER ;
+
+-- 09. People with Balance Higher Than
+DELIMITER $$
+CREATE PROCEDURE usp_get_holders_with_balance_higher_than(money DECIMAL(19, 4))
+BEGIN
+    SELECT account_holders.first_name, account_holders.last_name
+    FROM account_holders
+             JOIN accounts ON account_holders.id = accounts.account_holder_id
+    GROUP BY account_holders.id
+    HAVING SUM(balance) > money
+    ORDER BY account_holders.id;
+END$$
+DELIMITER ;
