@@ -108,3 +108,9 @@ BEGIN
     ORDER BY account_holders.id;
 END$$
 DELIMITER ;
+
+-- 10. Future Value Function
+CREATE FUNCTION ufn_calculate_future_value(initial_sum DECIMAL(19, 4), interest_rate_per_yeat DECIMAL(19, 4),
+                                           number_of_years INT)
+    RETURNS DECIMAL(19, 4)
+    RETURN initial_sum * POW((1 + interest_rate_per_yeat), number_of_years);
