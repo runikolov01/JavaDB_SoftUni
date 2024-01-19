@@ -112,3 +112,10 @@ LIMIT 5;
 SELECT CONCAT(last_name, first_name, LENGTH(first_name), 'Restaurant') AS username,  REVERSE(SUBSTRING(email, 2, 12)) AS password FROM waiters WHERE salary IS NOT NULL
 ORDER BY password DESC;
 
+-- 08. Top from menu
+SELECT id, name, COUNT(product_id) AS count
+FROM products
+JOIN orders_products op on products.id = op.product_id
+GROUP BY product_id, name
+HAVING count > 4
+ORDER BY count DESC, name ASC;
