@@ -89,3 +89,8 @@ INSERT INTO products(name, type, price)
 UPDATE orders
 SET table_id = table_id - 1
 WHERE id BETWEEN 12 AND 23;
+
+-- 04. Delete
+DELETE
+FROM waiters AS w
+WHERE (SELECT COUNT(*) FROM orders WHERE waiter_id = w.id) = 0;
