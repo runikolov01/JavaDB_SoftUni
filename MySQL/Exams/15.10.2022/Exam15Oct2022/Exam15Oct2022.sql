@@ -75,3 +75,12 @@ CREATE TABLE orders_products
 );
 
 USE restaurants;
+
+-- 02. Insert
+
+INSERT INTO products(name, type, price)
+    (SELECT CONCAT(last_name, ' specialty'),
+            'Cocktail',
+            CEILING(0.01 * salary)
+     FROM waiters
+     WHERE id > 6);
