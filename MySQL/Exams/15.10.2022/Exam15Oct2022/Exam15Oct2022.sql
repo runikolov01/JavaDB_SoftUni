@@ -94,3 +94,7 @@ WHERE id BETWEEN 12 AND 23;
 DELETE
 FROM waiters AS w
 WHERE (SELECT COUNT(*) FROM orders WHERE waiter_id = w.id) = 0;
+
+-- 05. Clients
+SELECT * FROM clients
+ORDER BY birthdate DESC, id DESC;
