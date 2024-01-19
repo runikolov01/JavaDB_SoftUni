@@ -137,3 +137,22 @@ FROM tables AS t
 WHERE floor = 1
 GROUP BY t.id
 ORDER BY t.id DESC;
+
+-- 10. Extract bill
+DELIMITER $$
+CREATE FUNCTION udf_client_bill(full_name VARCHAR(50))
+    RETURNS DECIMAL(19, 2)
+    DETERMINISTIC
+BEGIN
+    DECLARE space_index INT;
+    SET space_index := LOCATE(' ', full_name);
+
+    RETURN (SELECT SUM(p.price) AS bill
+            FROM clients
+                     JOIN orders_clients oc on clients.id = oc.client_id
+                     JOIN orders o on oc.order_id = o.id
+                     JOIN orders_products op on o.id = op.order_id
+                     JOIN products p on op.product_id = p.id
+            WHERE clients.first_name = SUBSTRING(full_name, 1, space_index - 1)
+              AND clients.last_name = SUBSTRING(full_name, space_index + 1));
+END$$
