@@ -120,16 +120,30 @@ DELIMITER $$
 CREATE PROCEDURE usp_calculate_future_value_for_account(
     account_id INT, interest_rate DECIMAL(19, 4))
 BEGIN
-    SELECT
-        a.id AS 'account_id', h.first_name, h.last_name, a.balance AS 'current_balance',
-        ufn_calculate_future_value(a.balance, interest_rate, 5) AS 'balance_in_5_years'
-    FROM
-        `account_holders` AS h
-            JOIN
-        `accounts` AS a ON h.id=a.account_holder_id
+    SELECT a.id                                                    AS 'account_id',
+           h.first_name,
+           h.last_name,
+           a.balance                                               AS 'current_balance',
+           ufn_calculate_future_value(a.balance, interest_rate, 5) AS 'balance_in_5_years'
+    FROM `account_holders` AS h
+             JOIN
+         `accounts` AS a ON h.id = a.account_holder_id
     WHERE a.id = account_id;
 END $$
 DELIMITER ;
+
+-- 12. Deposit Money
+CREATE PROCEDURE usp_deposit_money(a_account_id INT(11), money_amount DECIMAL(65, 4))
+BEGIN
+    START TRANSACTION;
+    IF (money_amount <= 0 OR money_amount IS NULL OR a_account_id IS NULL OR a_account_id < 1) THEN
+        ROLLBACK;
+    ELSE
+        UPDATE accounts
+        SET balance = balance + money_amount
+        WHERE id = a_account_id;
+    END IF;
+END;
 
 -- 13. Withdraw Money
 DELIMITER $$
