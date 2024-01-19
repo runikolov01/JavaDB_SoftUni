@@ -156,3 +156,13 @@ BEGIN
             WHERE clients.first_name = SUBSTRING(full_name, 1, space_index - 1)
               AND clients.last_name = SUBSTRING(full_name, space_index + 1));
 END$$
+
+-- 11. Happy hour
+DELIMITER $$
+CREATE PROCEDURE udp_happy_hour(`type` VARCHAR(50))
+BEGIN
+    UPDATE products
+    SET price = price * 0.8
+    WHERE price >= 10
+      AND products.type = `type`;
+END$$
