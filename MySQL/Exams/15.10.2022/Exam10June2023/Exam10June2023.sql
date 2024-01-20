@@ -99,7 +99,8 @@ FROM universities
 WHERE number_of_staff IS NULL;
 
 -- 05. Cities
-SELECT * FROM cities
+SELECT *
+FROM cities
 ORDER BY population DESC;
 
 -- 06. Students age
@@ -110,11 +111,21 @@ ORDER BY first_name DESC, email ASC, id ASC
 LIMIT 10;
 
 -- 07. New students
-SELECT
-    CONCAT(s.first_name,' ', s.last_name) AS full_name,
-    SUBSTRING(email, 2, 10) AS username,
-    reverse(phone) AS password
+SELECT CONCAT(s.first_name, ' ', s.last_name) AS full_name,
+       SUBSTRING(email, 2, 10)                AS username,
+       reverse(phone)                         AS password
 FROM students s
          LEFT JOIN students_courses sc ON s.id = sc.student_id
 WHERE sc.student_id IS NULL
 ORDER BY password DESC;
+
+-- 08.	Students count
+SELECT
+    COUNT(students_courses.student_id) AS students_count,
+    universities.name AS university_name
+FROM students_courses
+         JOIN courses ON students_courses.course_id = courses.id
+         JOIN universities ON courses.university_id = universities.id
+GROUP BY universities.name
+HAVING students_count >= 8
+ORDER BY students_count DESC, university_name DESC;
