@@ -158,3 +158,22 @@ BEGIN
               AND c.name = course_name);
 END$$
 DELIMITER ;
+
+-- 11.	Graduate students
+DELIMITER $$
+CREATE PROCEDURE udp_graduate_all_students_by_year(IN year_started INT)
+BEGIN
+    CREATE TEMPORARY TABLE temp_student_ids AS
+    SELECT s.id
+    FROM courses
+             JOIN students_courses sc ON courses.id = sc.course_id
+             JOIN students s ON s.id = sc.student_id
+    WHERE YEAR(courses.start_date) = year_started;
+
+    UPDATE students
+    SET is_graduated = 1
+    WHERE id IN (SELECT id FROM temp_student_ids);
+    DROP TEMPORARY TABLE IF EXISTS temp_student_ids;
+END $$
+DELIMITER ;
+
