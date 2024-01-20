@@ -79,3 +79,7 @@ DELETE flights
 FROM flights
          LEFT JOIN flights_passengers fp ON flights.id = fp.flight_id
 WHERE fp.flight_id IS NULL;
+
+-- 05. Airplanes
+SELECT * FROM airplanes
+ORDER BY cost DESC, id DESC;
