@@ -120,3 +120,21 @@ SELECT flight_code,
            END AS day_part
 FROM flights
 ORDER BY flight_code DESC;
+
+-- 10. Number of flights
+DELIMITER $$
+CREATE FUNCTION udf_count_flights_from_country(country VARCHAR(50))
+    RETURNS INT
+    DETERMINISTIC
+BEGIN
+    DECLARE flight_count INT;
+
+    SELECT COUNT(countries.id) INTO flight_count
+    FROM countries
+             JOIN flights f ON countries.id = f.departure_country
+    WHERE countries.name = country;
+
+    RETURN flight_count;
+END$$
+DELIMITER ;
+
