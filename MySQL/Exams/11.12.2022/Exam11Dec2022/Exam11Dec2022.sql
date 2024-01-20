@@ -61,11 +61,10 @@ CREATE TABLE flights_passengers
 
 -- 02. Insert
 INSERT INTO airplanes (model, passengers_capacity, tank_capacity, cost)
-SELECT
-    CONCAT(REVERSE(first_name), '797') AS model,
-    (LENGTH(last_name) * 17) AS passengers_capacity,
-    (id * 790) AS tank_capacity,
-    (LENGTH(first_name) * 50.6) AS cost
+SELECT CONCAT(REVERSE(first_name), '797') AS model,
+       (LENGTH(last_name) * 17)           AS passengers_capacity,
+       (id * 790)                         AS tank_capacity,
+       (LENGTH(first_name) * 50.6)        AS cost
 FROM passengers
 WHERE id <= 5;
 
@@ -81,5 +80,13 @@ FROM flights
 WHERE fp.flight_id IS NULL;
 
 -- 05. Airplanes
-SELECT * FROM airplanes
+SELECT *
+FROM airplanes
 ORDER BY cost DESC, id DESC;
+
+-- 06. Flights from 2022
+SELECT flight_code, departure_country, airplane_id, departure
+FROM flights
+WHERE YEAR(departure) = 2022
+ORDER BY airplane_id ASC, flight_code ASC
+LIMIT 20;
