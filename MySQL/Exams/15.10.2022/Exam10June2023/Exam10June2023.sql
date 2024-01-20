@@ -88,3 +88,7 @@ SELECT CONCAT(teacher_name, ' course'),
 FROM courses
 WHERE id <= 5;
 
+-- 03. Update
+UPDATE universities
+SET tuition_fee = tuition_fee + 300
+WHERE id BETWEEN 5 AND 12;
