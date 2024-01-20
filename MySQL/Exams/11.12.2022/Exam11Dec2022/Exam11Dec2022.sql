@@ -129,7 +129,8 @@ CREATE FUNCTION udf_count_flights_from_country(country VARCHAR(50))
 BEGIN
     DECLARE flight_count INT;
 
-    SELECT COUNT(countries.id) INTO flight_count
+    SELECT COUNT(countries.id)
+    INTO flight_count
     FROM countries
              JOIN flights f ON countries.id = f.departure_country
     WHERE countries.name = country;
@@ -138,3 +139,14 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- 11. Delay flight
+DELIMITER $$
+CREATE PROCEDURE udp_delay_flight(code VARCHAR(50))
+BEGIN
+    UPDATE flights
+    SET departure = DATE_ADD(departure, INTERVAL 30 MINUTE),
+        has_delay = 1
+    WHERE flight_code = code;
+END $$
+
+CALL udp_delay_flight('ZP-782')
