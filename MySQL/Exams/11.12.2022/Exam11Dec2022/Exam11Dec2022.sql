@@ -70,3 +70,6 @@ FROM passengers
 WHERE id <= 5;
 
 -- 03. Update
+UPDATE flights
+SET airplane_id = airplane_id + 1
+WHERE departure_country = 22;
