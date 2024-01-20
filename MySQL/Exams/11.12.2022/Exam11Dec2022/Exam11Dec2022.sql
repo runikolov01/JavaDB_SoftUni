@@ -73,3 +73,9 @@ WHERE id <= 5;
 UPDATE flights
 SET airplane_id = airplane_id + 1
 WHERE departure_country = 22;
+
+-- 04. Delete
+DELETE flights
+FROM flights
+         LEFT JOIN flights_passengers fp ON flights.id = fp.flight_id
+WHERE fp.flight_id IS NULL;
