@@ -101,3 +101,10 @@ WHERE number_of_staff IS NULL;
 -- 05. Cities
 SELECT * FROM cities
 ORDER BY population DESC;
+
+-- 06. Students age
+SELECT first_name, last_name, age, phone, email
+FROM students
+WHERE age >= 21
+ORDER BY first_name DESC, email ASC, id ASC
+LIMIT 10;
