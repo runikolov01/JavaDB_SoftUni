@@ -99,3 +99,12 @@ FROM passengers
          LEFT JOIN flights_passengers fp on passengers.id = fp.passenger_id
 WHERE fp.flight_id IS NULL
 ORDER BY country_id ASC;
+
+-- 08. Leading destinations
+SELECT c.name, c.currency, COUNT(flights_passengers.flight_id) AS booked_tickets
+FROM flights
+         JOIN flights_passengers ON flights.id = flights_passengers.flight_id
+         JOIN countries c ON flights.destination_country = c.id
+GROUP BY c.name, c.currency
+HAVING booked_tickets >= 20
+ORDER BY booked_tickets DESC;
