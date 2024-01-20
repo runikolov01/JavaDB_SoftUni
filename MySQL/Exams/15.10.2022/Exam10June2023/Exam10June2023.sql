@@ -120,9 +120,8 @@ WHERE sc.student_id IS NULL
 ORDER BY password DESC;
 
 -- 08.	Students count
-SELECT
-    COUNT(students_courses.student_id) AS students_count,
-    universities.name AS university_name
+SELECT COUNT(students_courses.student_id) AS students_count,
+       universities.name                  AS university_name
 FROM students_courses
          JOIN courses ON students_courses.course_id = courses.id
          JOIN universities ON courses.university_id = universities.id
@@ -131,17 +130,31 @@ HAVING students_count >= 8
 ORDER BY students_count DESC, university_name DESC;
 
 -- 09.	Price rankings
-SELECT
-    u.name AS university_name,
-    c.name AS city_name,
-    address,
-    CASE
-        WHEN tuition_fee < 800 THEN 'cheap'
-        WHEN tuition_fee >= 800 AND tuition_fee < 1200 THEN 'normal'
-        WHEN tuition_fee >= 1200 AND tuition_fee < 2500 THEN 'high'
-        ELSE 'expensive'
-        END AS price_rank,
-    tuition_fee
+SELECT u.name  AS university_name,
+       c.name  AS city_name,
+       address,
+       CASE
+           WHEN tuition_fee < 800 THEN 'cheap'
+           WHEN tuition_fee >= 800 AND tuition_fee < 1200 THEN 'normal'
+           WHEN tuition_fee >= 1200 AND tuition_fee < 2500 THEN 'high'
+           ELSE 'expensive'
+           END AS price_rank,
+       tuition_fee
 FROM universities u
-JOIN cities c on u.city_id = c.id
+         JOIN cities c on u.city_id = c.id
 ORDER BY tuition_fee ASC;
+
+-- 10. Average grades
+DELIMITER $$
+CREATE FUNCTION udf_average_alumni_grade_by_course_name(course_name VARCHAR(60))
+    RETURNS DECIMAL(19, 2)
+    DETERMINISTIC
+BEGIN
+    RETURN (SELECT AVG(grade)
+            FROM students_courses
+                     JOIN courses c ON c.id = students_courses.course_id
+                     JOIN students s ON s.id = students_courses.student_id
+            WHERE s.is_graduated = 1
+              AND c.name = course_name);
+END$$
+DELIMITER ;
