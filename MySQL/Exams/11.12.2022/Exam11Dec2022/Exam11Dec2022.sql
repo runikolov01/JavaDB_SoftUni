@@ -90,3 +90,12 @@ FROM flights
 WHERE YEAR(departure) = 2022
 ORDER BY airplane_id ASC, flight_code ASC
 LIMIT 20;
+
+-- 07. Private flights
+SELECT UPPER(CONCAT(SUBSTRING(passengers.last_name, 1, 2), country_id)) AS flight_code,
+       CONCAT(first_name, ' ', last_name)                               AS full_name,
+       country_id
+FROM passengers
+         LEFT JOIN flights_passengers fp on passengers.id = fp.passenger_id
+WHERE fp.flight_id IS NULL
+ORDER BY country_id ASC;
