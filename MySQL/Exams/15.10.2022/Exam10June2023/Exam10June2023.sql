@@ -1,9 +1,9 @@
 -- 01. Table Design
 CREATE
-DATABASE universities;
+    DATABASE universities;
 
 USE
-universities;
+    universities;
 
 CREATE TABLE countries
 (
@@ -43,7 +43,7 @@ CREATE TABLE students
     age          INT,
     phone        VARCHAR(20)  NOT NULL UNIQUE,
     email        VARCHAR(255) NOT NULL UNIQUE,
-    is_graduated TINYINT(1) NOT NULL,
+    is_graduated TINYINT(1)   NOT NULL,
     city_id      INT,
     CONSTRAINT fk_students_cities
         FOREIGN KEY (city_id)
@@ -76,3 +76,15 @@ CREATE TABLE students_courses
         FOREIGN KEY (course_id)
             REFERENCES courses (id)
 );
+
+-- 02. Insert
+INSERT INTO courses (name, duration_hours, start_date, teacher_name, description, university_id)
+SELECT CONCAT(teacher_name, ' course'),
+       (LENGTH(name) / 10),
+       DATE_ADD(start_date, INTERVAL 5 DAY),
+       REVERSE(teacher_name),
+       CONCAT('Course ', teacher_name, REVERSE(description)),
+       DAY(start_date)
+FROM courses
+WHERE id <= 5;
+
