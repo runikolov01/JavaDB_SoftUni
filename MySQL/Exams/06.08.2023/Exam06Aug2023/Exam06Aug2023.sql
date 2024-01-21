@@ -163,3 +163,14 @@ BEGIN
             WHERE cities.name = cityName);
 END $$
 DELIMITER ;
+
+-- 11. Special Offer
+DELIMITER $$
+CREATE PROCEDURE udp_special_offer(IN firstName VARCHAR(50))
+BEGIN
+    UPDATE property_offers
+        JOIN agents a on property_offers.agent_id = a.id
+    SET price = price * 0.9
+    WHERE a.first_name = `firstName`;
+END $$
+DELIMITER ;
