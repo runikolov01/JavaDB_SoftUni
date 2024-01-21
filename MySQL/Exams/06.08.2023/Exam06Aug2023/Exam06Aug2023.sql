@@ -110,3 +110,7 @@ WHERE price >= 800000;
 DELETE property_transactions
 FROM property_transactions
 WHERE is_successful = 0;
+
+-- 05. Agents
+SELECT * FROM agents
+ORDER BY city_id DESC, phone DESC;
