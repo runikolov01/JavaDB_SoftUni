@@ -149,3 +149,17 @@ SELECT address,
            END AS size
 FROM properties
 ORDER BY area ASC, address DESC;
+
+-- 10. Offers count in a city
+DELIMITER $$
+CREATE FUNCTION udf_offers_from_city_name(cityName VARCHAR(50))
+    RETURNS INT
+    DETERMINISTIC
+BEGIN
+    RETURN (SELECT COUNT(city_id)
+            FROM cities
+                     JOIN properties p on cities.id = p.city_id
+                     JOIN property_offers po on p.id = po.property_id
+            WHERE cities.name = cityName);
+END $$
+DELIMITER ;
