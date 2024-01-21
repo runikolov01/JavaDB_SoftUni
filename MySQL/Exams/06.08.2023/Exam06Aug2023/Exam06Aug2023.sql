@@ -137,3 +137,15 @@ FROM property_transactions
 GROUP BY bank_name
 HAVING count >= 9
 ORDER BY count DESC, bank_name ASC;
+
+-- 09. Size of the area
+SELECT address,
+       area,
+       CASE
+           WHEN area <= 100 THEN 'small'
+           WHEN area >= 101 AND area <= 200 THEN 'medium'
+           WHEN area >= 201 AND area <= 500 THEN 'large'
+           ELSE 'extra large'
+           END AS size
+FROM properties
+ORDER BY area ASC, address DESC;
