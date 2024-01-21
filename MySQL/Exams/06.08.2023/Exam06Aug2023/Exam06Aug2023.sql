@@ -105,3 +105,8 @@ INSERT INTO property_transactions(property_id, buyer_id, transaction_date, bank_
 UPDATE properties
 SET price = price - 50000
 WHERE price >= 800000;
+
+-- 04. Delete
+DELETE property_transactions
+FROM property_transactions
+WHERE is_successful = 0;
