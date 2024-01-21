@@ -112,5 +112,13 @@ FROM property_transactions
 WHERE is_successful = 0;
 
 -- 05. Agents
-SELECT * FROM agents
+SELECT *
+FROM agents
 ORDER BY city_id DESC, phone DESC;
+
+-- 06. Offers from 2021
+SELECT *
+FROM property_offers
+WHERE YEAR(offer_datetime) = 2021
+ORDER BY price ASC
+LIMIT 10;
