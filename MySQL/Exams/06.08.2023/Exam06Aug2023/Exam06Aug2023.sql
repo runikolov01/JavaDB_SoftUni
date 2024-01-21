@@ -100,3 +100,8 @@ INSERT INTO property_transactions(property_id, buyer_id, transaction_date, bank_
             (1)
      FROM property_offers
      WHERE agent_id <= 2);
+
+-- 03. Update
+UPDATE properties
+SET price = price - 50000
+WHERE price >= 800000;
