@@ -130,3 +130,10 @@ FROM properties
          LEFT JOIN property_offers po on properties.id = po.property_id
 WHERE agent_id IS NULL
 ORDER BY agent_name DESC, price DESC;
+
+-- 08. Best Banks
+SELECT bank_name, COUNT(iban) AS count
+FROM property_transactions
+GROUP BY bank_name
+HAVING count >= 9
+ORDER BY count DESC, bank_name ASC;
