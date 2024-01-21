@@ -122,3 +122,11 @@ FROM property_offers
 WHERE YEAR(offer_datetime) = 2021
 ORDER BY price ASC
 LIMIT 10;
+
+-- 07. Properties without offers
+SELECT (SUBSTRING(address, 1, 6)) AS agent_name,
+       (LENGTH(address) * 5430)   AS price
+FROM properties
+         LEFT JOIN property_offers po on properties.id = po.property_id
+WHERE agent_id IS NULL
+ORDER BY agent_name DESC, price DESC;
