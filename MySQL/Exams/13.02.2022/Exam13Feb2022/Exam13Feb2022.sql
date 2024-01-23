@@ -97,3 +97,7 @@ DELETE customers
 FROM customers
          LEFT JOIN orders o on customers.id = o.customer_id
 WHERE customer_id IS NULL;
+
+-- 05. Categories
+SELECT * FROM categories
+ORDER BY name DESC;
