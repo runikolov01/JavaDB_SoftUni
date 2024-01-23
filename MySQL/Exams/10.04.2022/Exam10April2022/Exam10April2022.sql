@@ -106,5 +106,14 @@ FROM countries
 WHERE country_id IS NULL;
 
 -- 05. Countries
-SELECT * FROM countries
+SELECT *
+FROM countries
 ORDER BY currency DESC, id;
+
+-- 06. Old movies
+SELECT movies_additional_info.id, title, runtime, budget, release_date
+FROM movies_additional_info
+         JOIN movies m on movies_additional_info.id = m.movie_info_id
+WHERE YEAR(release_date) BETWEEN 1996 AND 1999
+ORDER BY runtime, id
+LIMIT 20;
