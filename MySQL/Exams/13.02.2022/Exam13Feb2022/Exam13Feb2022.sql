@@ -135,3 +135,17 @@ FROM products p
 GROUP BY c.id, c.name
 ORDER BY items_count DESC, total_quantity ASC
 LIMIT 5;
+
+-- 10. Extract client cards count
+DELIMITER $$
+CREATE FUNCTION udf_customer_products_count(name VARCHAR(30))
+    RETURNS INT
+    DETERMINISTIC
+BEGIN
+    RETURN (SELECT COUNT(o.order_datetime)
+            FROM customers
+                     JOIN orders o on customers.id = o.customer_id
+                     JOIN orders_products op on o.id = op.order_id
+            WHERE customers.first_name = name
+            GROUP BY customer_id);
+END $$
