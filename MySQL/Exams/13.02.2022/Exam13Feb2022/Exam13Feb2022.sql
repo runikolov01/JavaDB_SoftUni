@@ -149,3 +149,16 @@ BEGIN
             WHERE customers.first_name = name
             GROUP BY customer_id);
 END $$
+DELIMITER ;
+
+-- 11. Reduce price
+DELIMITER $$
+CREATE PROCEDURE udp_reduce_price(category_name VARCHAR(50))
+BEGIN
+    UPDATE categories
+        JOIN products p ON categories.id = p.category_id
+        JOIN reviews r ON p.review_id = r.id
+    SET price = price * 0.7
+    WHERE categories.name = category_name
+      AND rating < 4;
+END $$
