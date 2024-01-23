@@ -135,3 +135,19 @@ FROM countries
 GROUP BY countries.id
 HAVING movies_count >= 7
 ORDER BY name DESC;
+
+-- 09. Rating system
+SELECT title,
+       CASE
+           WHEN (rating) <= 4 THEN 'poor'
+           WHEN (rating) > 4 and rating <= 7 THEN 'good'
+           ELSE 'excellent'
+           END AS rating,
+       CASE
+           WHEN (has_subtitles) = 0 THEN '-'
+           ELSE 'english'
+           END AS subtitles,
+       budget
+FROM movies
+         JOIN movies_additional_info mai on movies.movie_info_id = mai.id
+ORDER BY budget DESC;
