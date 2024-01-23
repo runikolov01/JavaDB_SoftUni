@@ -104,3 +104,7 @@ DELETE countries
 FROM countries
          LEFT JOIN movies m on countries.id = m.country_id
 WHERE country_id IS NULL;
+
+-- 05. Countries
+SELECT * FROM countries
+ORDER BY currency DESC, id;
