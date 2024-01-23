@@ -98,3 +98,9 @@ UPDATE movies_additional_info
 SET runtime = runtime - 10
 WHERE id >= 15
   AND id <= 25;
+
+-- 04. Delete
+DELETE countries
+FROM countries
+         LEFT JOIN movies m on countries.id = m.country_id
+WHERE country_id IS NULL;
