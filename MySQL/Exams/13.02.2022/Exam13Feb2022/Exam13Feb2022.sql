@@ -85,3 +85,9 @@ SELECT SUBSTRING(description, 1, 15),
        '2010-10-10'
 FROM products
 WHERE id >= 5;
+
+-- 03. Update
+UPDATE products
+SET quantity_in_stock = quantity_in_stock - 5
+WHERE quantity_in_stock >= 60
+  AND quantity_in_stock <= 70;
