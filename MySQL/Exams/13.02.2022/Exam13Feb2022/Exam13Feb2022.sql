@@ -91,3 +91,9 @@ UPDATE products
 SET quantity_in_stock = quantity_in_stock - 5
 WHERE quantity_in_stock >= 60
   AND quantity_in_stock <= 70;
+
+-- 04. Delete
+DELETE customers
+FROM customers
+         LEFT JOIN orders o on customers.id = o.customer_id
+WHERE customer_id IS NULL;
