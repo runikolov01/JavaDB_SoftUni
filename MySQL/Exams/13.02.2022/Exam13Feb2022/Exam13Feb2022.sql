@@ -109,3 +109,10 @@ FROM products
 WHERE price > 1000
   AND quantity_in_stock < 30
 ORDER BY quantity_in_stock, id;
+
+-- 07. Review
+SELECT *
+FROM reviews
+WHERE content LIKE 'My%'
+  AND LENGTH(content) > 61
+ORDER BY rating DESC;
