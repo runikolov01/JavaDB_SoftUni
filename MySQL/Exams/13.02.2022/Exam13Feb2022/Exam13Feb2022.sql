@@ -1,5 +1,5 @@
 CREATE
-DATABASE online_store;
+    DATABASE online_store;
 USE online_store;
 DROP DATABASE online_store;
 
@@ -76,3 +76,12 @@ CREATE TABLE orders_products
         FOREIGN KEY (product_id)
             REFERENCES products (id)
 );
+
+-- 02. Insert
+INSERT INTO reviews (content, rating, picture_url, published_at)
+SELECT SUBSTRING(description, 1, 15),
+       (price / 8),
+       REVERSE(name),
+       '2010-10-10'
+FROM products
+WHERE id >= 5;
