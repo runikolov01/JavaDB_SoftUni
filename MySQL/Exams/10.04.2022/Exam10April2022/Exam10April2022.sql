@@ -92,3 +92,9 @@ INSERT INTO actors(first_name, last_name, birthdate, height, awards, country_id)
             (3)
      FROM actors
      WHERE actors.id <= 10);
+
+-- 03.	Update
+UPDATE movies_additional_info
+SET runtime = runtime - 10
+WHERE id >= 15
+  AND id <= 25;
