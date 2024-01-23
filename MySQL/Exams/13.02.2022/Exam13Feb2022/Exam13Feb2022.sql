@@ -120,8 +120,18 @@ ORDER BY rating DESC;
 -- 08. First customers
 SELECT CONCAT_WS(' ', first_name, last_name) AS full_name,
        address,
-       order_datetime AS order_date
+       order_datetime                        AS order_date
 FROM customers
          JOIN orders o on customers.id = o.customer_id
 WHERE YEAR(order_datetime) <= 2018
 ORDER BY full_name DESC;
+
+-- 09. Best categories
+SELECT COUNT(p.id)              AS items_count,
+       c.name,
+       SUM(p.quantity_in_stock) AS total_quantity
+FROM products p
+         JOIN categories c ON c.id = p.category_id
+GROUP BY c.id, c.name
+ORDER BY items_count DESC, total_quantity ASC
+LIMIT 5;
