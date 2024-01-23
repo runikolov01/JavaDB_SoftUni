@@ -167,3 +167,16 @@ BEGIN
             WHERE first_name = SUBSTRING_INDEX(full_name, ' ', 1)
               AND g.name = 'History');
 END $$
+DELIMITER ;
+
+-- 11. Movie awards
+DELIMITER $$
+CREATE PROCEDURE udp_award_movie(movie_title VARCHAR(50))
+BEGIN
+    UPDATE actors
+        JOIN movies_actors ma on actors.id = ma.actor_id
+        JOIN movies m on ma.movie_id = m.id
+    SET awards = awards + 1
+    WHERE m.title = movie_title;
+END $$
+DELIMITER ;
