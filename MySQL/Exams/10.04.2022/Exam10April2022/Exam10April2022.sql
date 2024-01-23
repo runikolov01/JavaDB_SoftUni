@@ -151,3 +151,19 @@ SELECT title,
 FROM movies
          JOIN movies_additional_info mai on movies.movie_info_id = mai.id
 ORDER BY budget DESC;
+
+-- 10. History movies
+DELIMITER $$
+CREATE FUNCTION udf_actor_history_movies_count(full_name VARCHAR(50))
+    RETURNS INT
+    DETERMINISTIC
+BEGIN
+    RETURN (SELECT COUNT(a.id)
+            FROM movies
+                     JOIN movies_actors ma on movies.id = ma.movie_id
+                     JOIN actors a on ma.actor_id = a.id
+                     JOIN genres_movies gm on movies.id = gm.movie_id
+                     JOIN genres g on gm.genre_id = g.id
+            WHERE first_name = SUBSTRING_INDEX(full_name, ' ', 1)
+              AND g.name = 'History');
+END $$
