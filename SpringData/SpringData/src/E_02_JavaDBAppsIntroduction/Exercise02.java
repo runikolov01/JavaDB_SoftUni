@@ -18,10 +18,7 @@ public class Exercise02 {
 
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_VILLAINS_MINIONS_NUMBER);
 
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            System.out.printf("%s %d%n", resultSet.getString("name"), resultSet.getInt("count"));
-        }
+        printResult(preparedStatement);
     }
 
     private static Connection getMySQLConnection() throws SQLException {
@@ -44,4 +41,12 @@ public class Exercise02 {
         return connection;
     }
 
+    private static void printResult(PreparedStatement preparedStatement) throws SQLException {
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            int count = resultSet.getInt("count");
+            System.out.printf("%s %d%n", name, count);
+        }
+    }
 }
