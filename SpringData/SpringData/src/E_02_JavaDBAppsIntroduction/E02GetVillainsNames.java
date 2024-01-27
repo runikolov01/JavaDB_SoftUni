@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class Exercise02 {
+public class E02GetVillainsNames {
 
     private static final String SELECT_VILLAINS_MINIONS_NUMBER = "SELECT v.name, COUNT(distinct m.name) AS count " +
             "FROM villains AS v " +
