@@ -2,6 +2,7 @@ package E_02_JavaDBAppsIntroduction;
 
 import java.sql.*;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class Exercise02 {
 
@@ -13,11 +14,7 @@ public class Exercise02 {
             "HAVING count > 15";
 
     public static void main(String[] args) throws SQLException {
-        Properties userPass = new Properties();
-        userPass.setProperty("user", "root");
-        userPass.setProperty("password", "12345");
-
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/minions_db", userPass);
+        Connection connection = getMySQLConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_VILLAINS_MINIONS_NUMBER);
 
@@ -26,4 +23,25 @@ public class Exercise02 {
             System.out.printf("%s %d%n", resultSet.getString("name"), resultSet.getInt("count"));
         }
     }
+
+    private static Connection getMySQLConnection() throws SQLException {
+        Properties userPass = new Properties();
+        System.out.println("Enter your database`s username: ");
+        Scanner scanner = new Scanner(System.in);
+        String userName = scanner.nextLine();
+        userPass.setProperty("user", userName);
+        System.out.println("Enter your database`s password: ");
+        String pass = scanner.nextLine();
+        userPass.setProperty("password", pass);
+
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/minions_db", userPass);
+        System.out.println("--------------------------------------------------");
+        System.out.println("You are connected to the database successfully! :) ");
+        System.out.println("--------------------------------------------------");
+        System.out.println("The answer from the exercise is: ");
+        System.out.println("--------------------------------------------------");
+
+        return connection;
+    }
+
 }
