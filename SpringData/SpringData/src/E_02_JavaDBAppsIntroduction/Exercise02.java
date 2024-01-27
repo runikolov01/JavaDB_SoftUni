@@ -3,7 +3,7 @@ package E_02_JavaDBAppsIntroduction;
 import java.sql.*;
 import java.util.Properties;
 
-public class Exercise01 {
+public class Exercise02 {
 
     private static final String SELECT_VILLAINS_MINIONS_NUMBER = "SELECT v.name, COUNT(distinct m.name) AS count " +
             "FROM villains AS v " +
