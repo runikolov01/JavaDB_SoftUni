@@ -31,30 +31,22 @@ public class E03GetMinionsNames {
         Connection connection = Connector.getMySQLConnection();
 
         System.out.print("Enter villain`s ID: ");
-        int inputNumber = Integer.parseInt(sc.next());
+        final int inputNumber = Integer.parseInt(sc.next());
 
-        ResultSet firstResultSet = countMinions(inputNumber, connection);
+        ResultSet minionsCountSet = countMinions(inputNumber, connection);
 
-        while (firstResultSet.next()) {
-            int currentNum = firstResultSet.getInt("count");
+        while (minionsCountSet.next()) {
+            int currentNum = minionsCountSet.getInt("count");
             if (currentNum > 0) {
 
-                ResultSet secondResultSet = selectVillainName(connection, inputNumber);
-                while (secondResultSet.next()) {
-                    villainName = secondResultSet.getString("name");
+                final ResultSet villainNameSet = selectVillainName(connection, inputNumber);
+
+                while (villainNameSet.next()) {
+                    villainName = villainNameSet.getString("name");
                 }
-                System.out.printf("Villain: %s%n", villainName);
+                final ResultSet minionsNameAndAgeSet = selectMinionsNameAndAge(connection, inputNumber);
+                printResult(minionsNameAndAgeSet, villainName);
 
-                ResultSet thirdResult = selectMinionsNameAndAge(connection, inputNumber);
-
-                int number = 1;
-
-                while (thirdResult.next()) {
-                    String name = thirdResult.getString("name");
-                    int age = Integer.parseInt(thirdResult.getString("age"));
-                    System.out.printf(PRINT_FORMAT, number, name, age);
-                    number++;
-                }
             } else {
                 System.out.printf("No villain with ID %d exists in the database.", inputNumber);
             }
@@ -63,20 +55,29 @@ public class E03GetMinionsNames {
     }
 
     private static ResultSet countMinions(int inputNumber, Connection connection) throws SQLException {
-        PreparedStatement firstPreparedStatement = connection.prepareStatement(SELECT_COUNT_MINIONS);
+        final PreparedStatement firstPreparedStatement = connection.prepareStatement(SELECT_COUNT_MINIONS);
         firstPreparedStatement.setInt(1, inputNumber);
         return firstPreparedStatement.executeQuery();
     }
 
     private static ResultSet selectVillainName(Connection connection, int inputNumber) throws SQLException {
-        PreparedStatement secondPreparedStatment = connection.prepareStatement(SELECT_VILLAIN_NAME);
-        secondPreparedStatment.setInt(1, inputNumber);
-        return secondPreparedStatment.executeQuery();
+        final PreparedStatement secondPreparedStatement = connection.prepareStatement(SELECT_VILLAIN_NAME);
+        secondPreparedStatement.setInt(1, inputNumber);
+        return secondPreparedStatement.executeQuery();
     }
 
     private static ResultSet selectMinionsNameAndAge(Connection connection, int inputNumber) throws SQLException {
-        PreparedStatement thirdPrepareStatement = connection.prepareStatement(SELECT_MINIONS_NAME_AND_AGE);
+        final PreparedStatement thirdPrepareStatement = connection.prepareStatement(SELECT_MINIONS_NAME_AND_AGE);
         thirdPrepareStatement.setInt(1, inputNumber);
         return thirdPrepareStatement.executeQuery();
+    }
+
+    private static void printResult(ResultSet minionsNameAndAgeSet, String villainName) throws SQLException {
+        System.out.printf("Villain: %s%n", villainName);
+        for (int number = 1; minionsNameAndAgeSet.next(); number++) {
+            String name = minionsNameAndAgeSet.getString("name");
+            int age = Integer.parseInt(minionsNameAndAgeSet.getString("age"));
+            System.out.printf(PRINT_FORMAT, number, name, age);
+        }
     }
 }
