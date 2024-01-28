@@ -14,16 +14,20 @@ public class E02GetVillainsNames {
             "HAVING count > 15 " +
             "ORDER BY count DESC";
 
+    private static final String PRINT_FORMAT = "%s %d%n";
+
     public static void main(String[] args) throws SQLException {
         Connection connection = getMySQLConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_VILLAINS_MINIONS_NUMBER);
+        final PreparedStatement preparedStatement = connection.prepareStatement(SELECT_VILLAINS_MINIONS_NUMBER);
 
         printResult(preparedStatement);
+
+        connection.close();
     }
 
     private static Connection getMySQLConnection() throws SQLException {
-        Properties userPass = new Properties();
+        final Properties userPass = new Properties();
         System.out.println("Enter your database`s username: ");
         Scanner scanner = new Scanner(System.in);
         String userName = scanner.nextLine();
@@ -32,7 +36,7 @@ public class E02GetVillainsNames {
         String pass = scanner.nextLine();
         userPass.setProperty("password", pass);
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/minions_db", userPass);
+        final Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/minions_db", userPass);
         System.out.println("--------------------------------------------------");
         System.out.println("You are connected to the database successfully! :) ");
         System.out.println("--------------------------------------------------");
@@ -43,11 +47,11 @@ public class E02GetVillainsNames {
     }
 
     private static void printResult(PreparedStatement preparedStatement) throws SQLException {
-        ResultSet resultSet = preparedStatement.executeQuery();
+        final ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
-            String name = resultSet.getString("name");
-            int count = resultSet.getInt("count");
-            System.out.printf("%s %d%n", name, count);
+            final String name = resultSet.getString("name");
+            final int count = resultSet.getInt("count");
+            System.out.printf(PRINT_FORMAT, name, count);
         }
     }
 }
