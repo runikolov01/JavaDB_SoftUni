@@ -11,7 +11,8 @@ public class E02GetVillainsNames {
             "JOIN minions_db.minions_villains mv on v.id = mv.villain_id " +
             "JOIN minions_db.minions m on mv.minion_id = m.id " +
             "GROUP BY v.name " +
-            "HAVING count > 15";
+            "HAVING count > 15 " +
+            "ORDER BY count DESC";
 
     public static void main(String[] args) throws SQLException {
         Connection connection = getMySQLConnection();
