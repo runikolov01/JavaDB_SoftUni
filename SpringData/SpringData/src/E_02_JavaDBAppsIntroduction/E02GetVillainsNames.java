@@ -17,33 +17,13 @@ public class E02GetVillainsNames {
     private static final String PRINT_FORMAT = "%s %d%n";
 
     public static void main(String[] args) throws SQLException {
-        Connection connection = getMySQLConnection();
+        Connection connection = Connector.getMySQLConnection();
 
         final PreparedStatement preparedStatement = connection.prepareStatement(SELECT_VILLAINS_MINIONS_NUMBER);
 
         printResult(preparedStatement);
 
         connection.close();
-    }
-
-    private static Connection getMySQLConnection() throws SQLException {
-        final Properties userPass = new Properties();
-        System.out.println("Enter your database`s username: ");
-        Scanner scanner = new Scanner(System.in);
-        String userName = scanner.nextLine();
-        userPass.setProperty("user", userName);
-        System.out.println("Enter your database`s password: ");
-        String pass = scanner.nextLine();
-        userPass.setProperty("password", pass);
-
-        final Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/minions_db", userPass);
-        System.out.println("--------------------------------------------------");
-        System.out.println("You are connected to the database successfully! :) ");
-        System.out.println("--------------------------------------------------");
-        System.out.println("The answer from the exercise is: ");
-        System.out.println("--------------------------------------------------");
-
-        return connection;
     }
 
     private static void printResult(PreparedStatement preparedStatement) throws SQLException {

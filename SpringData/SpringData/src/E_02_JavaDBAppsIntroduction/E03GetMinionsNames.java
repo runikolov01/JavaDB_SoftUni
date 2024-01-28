@@ -28,7 +28,7 @@ public class E03GetMinionsNames {
         Scanner sc = new Scanner(System.in);
         String villainName = "";
 
-        Connection connection = getMySQLConnection();
+        Connection connection = Connector.getMySQLConnection();
 
         System.out.print("Enter villain`s ID: ");
         int inputNumber = Integer.parseInt(sc.next());
@@ -60,18 +60,6 @@ public class E03GetMinionsNames {
             }
         }
         connection.close();
-    }
-
-    private static Connection getMySQLConnection() throws SQLException {
-        Properties userPass = new Properties();
-        userPass.setProperty("user", "root");
-        userPass.setProperty("password", "12345");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/minions_db", userPass);
-        System.out.println("--------------------------------------------------");
-        System.out.println("You are connected to the database successfully! :) ");
-        System.out.println("--------------------------------------------------");
-
-        return connection;
     }
 
     private static ResultSet countMinions(int inputNumber, Connection connection) throws SQLException {
