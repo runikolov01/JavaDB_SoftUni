@@ -46,3 +46,15 @@ WHERE country = 'Bulgaria';
 
 
 SELECT * FROM towns;
+
+-- 9. Increase Age Stored Procedure
+DELIMITER $$
+
+CREATE PROCEDURE usp_get_older (IN minion_id INT)
+BEGIN
+    UPDATE minions
+    SET age = age + 1
+    WHERE id = minion_id;
+END$$
+
+DELIMITER ;
