@@ -8,10 +8,7 @@ import java.util.List;
 public class E02ChangeCasing
  {
     public static void main(String[] args) {
-        final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("soft_uni");
-        final EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-
+       final EntityManager entityManager = Connector.createEntityManager();
         entityManager.getTransaction().begin();
 
         List<Town> allTowns = entityManager.createQuery("FROM Town", Town.class).getResultList();
