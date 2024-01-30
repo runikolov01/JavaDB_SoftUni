@@ -8,7 +8,7 @@ public class E03ContainsEmployee {
 
         final EntityManager entityManager = Connector.createEntityManager();
         final Scanner scanner = new Scanner(System.in);
-        String fullName = scanner.nextLine();
+        final String fullName = scanner.nextLine();
         entityManager.getTransaction().begin();
 
         final String isEmployeePresented =
