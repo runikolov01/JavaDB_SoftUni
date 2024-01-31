@@ -128,4 +128,12 @@ public class Employee {
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
+
+    public void printFullNameDepartmentNameAndSalary() {
+        System.out.println(String.format("%s %s from %s - $%s",
+                this.firstName,
+                this.lastName,
+                this.department.getName(),
+                this.salary));
+    }
 }
