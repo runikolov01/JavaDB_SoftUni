@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "employees")
@@ -135,5 +136,18 @@ public class Employee {
                 this.lastName,
                 this.department.getName(),
                 this.salary));
+    }
+
+    public void printFullNameWithProjectNames() {
+
+
+        System.out.print(String.format("%s %s - %s%n%s",
+                this.firstName,
+                this.lastName,
+                this.jobTitle,
+                projects.stream()
+                        .map(Project::getName)
+                        .sorted()
+                        .collect(Collectors.joining(System.lineSeparator()))));
     }
 }
