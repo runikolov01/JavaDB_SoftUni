@@ -23,7 +23,7 @@ import static softuni.exam.models.Constants.*;
 // TODO: Implement all methods
 @Service
 public class MechanicsServiceImpl implements MechanicsService {
-    private static final String MECHANIC_FILE_PATH = "src/main/resources/files/json/mechanics.json";
+    private static String MECHANIC_FILE_PATH = "src/main/resources/files/json/mechanics.json";
 
     private final MechanicsRepository mechanicsRepository;
     private final ValidationUtils validationUtils;
@@ -51,27 +51,26 @@ public class MechanicsServiceImpl implements MechanicsService {
     @Override
     public String importMechanics() throws IOException {
         final StringBuilder stringBuilder = new StringBuilder();
-        final List<MechanicImportDto> mechanics = Arrays.stream(this.gson.fromJson(readMechanicsFromFile(), MechanicImportDto[].class))
-                .collect(Collectors.toList());
+
+        final List<MechanicImportDto> mechanics =
+                Arrays.stream(gson.fromJson(readMechanicsFromFile(), MechanicImportDto[].class))
+                        .collect(Collectors.toList());
 
         for (MechanicImportDto mechanic : mechanics) {
             stringBuilder.append(System.lineSeparator());
-            if (this.mechanicsRepository.findFirstByFirstName(mechanic.getFirstName()).isPresent() ||
-                    this.mechanicsRepository.findFirstByEmail(mechanic.getEmail()).isPresent() ||
+
+            if (this.mechanicsRepository.findFirstByEmail(mechanic.getEmail()).isPresent() ||
+                    this.mechanicsRepository.findFirstByFirstName(mechanic.getFirstName()).isPresent() ||
                     !this.validationUtils.isValid(mechanic)) {
                 stringBuilder.append(String.format(INVALID_FORMAT, MECHANIC));
                 continue;
             }
+
             this.mechanicsRepository.save(this.modelMapper.map(mechanic, Mechanic.class));
 
-            stringBuilder.append(String.format(SUCCESSFUL_FORMAT,
-                    MECHANIC,
-                    mechanic.getFirstName(),
-                    mechanic.getLastName()));
-
+            stringBuilder.append(String.format(SUCCESSFUL_FORMAT, MECHANIC, mechanic.getFirstName(), mechanic.getLastName()));
         }
 
         return stringBuilder.toString().trim();
-
     }
 }

@@ -1,6 +1,5 @@
 package softuni.exam.service.impl;
 
-import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,18 +18,17 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static softuni.exam.models.Constants.*;
-// TODO: Implement all methods
 
 @Service
 public class CarsServiceImpl implements CarsService {
+    private static String CARS_FILE_PATH = "src/main/resources/files/xml/cars.xml";
+
     private final CarsRepository carsRepository;
     private final ValidationUtils validationUtils;
     private final ModelMapper modelMapper;
     private final XmlParser xmlParser;
 
-
-    private static String CARS_FILE_PATH = "src/main/resources/files/xml/cars.xml";
-
+    @Autowired
     public CarsServiceImpl(CarsRepository carsRepository, ValidationUtils validationUtils, ModelMapper modelMapper, XmlParser xmlParser) {
         this.carsRepository = carsRepository;
         this.validationUtils = validationUtils;
@@ -53,16 +51,20 @@ public class CarsServiceImpl implements CarsService {
     public String importCars() throws IOException, JAXBException {
         final StringBuilder stringBuilder = new StringBuilder();
 
-        final List<CarImportDto> cars = this.xmlParser
-                .fromFile(Path.of(CARS_FILE_PATH).toFile(), CarsWrapperDto.class)
-                .getCars();
+        final List<CarImportDto> cars =
+                this.xmlParser
+                        .fromFile(Path.of(CARS_FILE_PATH).toFile(), CarsWrapperDto.class)
+                        .getCars();
 
         for (CarImportDto car : cars) {
+            stringBuilder.append(System.lineSeparator());
+
             if (this.carsRepository.findFirstByPlateNumber(car.getPlateNumber()).isPresent() ||
                     !this.validationUtils.isValid(car)) {
                 stringBuilder.append(String.format(INVALID_FORMAT, CAR));
                 continue;
             }
+
             this.carsRepository.save(this.modelMapper.map(car, Car.class));
 
             stringBuilder.append(String.format(SUCCESSFUL_FORMAT,
@@ -70,6 +72,8 @@ public class CarsServiceImpl implements CarsService {
                     car.getCarMake() + " -",
                     car.getCarModel()));
         }
+
+
         return stringBuilder.toString().trim();
     }
 }

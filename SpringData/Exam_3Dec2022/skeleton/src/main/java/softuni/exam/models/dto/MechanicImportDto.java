@@ -1,10 +1,16 @@
 package softuni.exam.models.dto;
 
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class MechanicImportDto {
+    //first name – length value higher than or equal to 2. The values are unique in the database.
+//last name – length value higher than or equal to 2.
+//email – an email – (must contains ‘@’ and ‘.’ – dot). The email of a seller is unique.
+//phone – length value higher than or equal to 2. Can be nullable. The values are unique in the database.
+
     @NotNull
     @Email
     private String email;

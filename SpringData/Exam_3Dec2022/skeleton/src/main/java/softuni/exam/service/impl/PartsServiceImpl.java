@@ -20,10 +20,9 @@ import java.util.stream.Collectors;
 
 import static softuni.exam.models.Constants.*;
 
-// TODO: Implement all methods
 @Service
 public class PartsServiceImpl implements PartsService {
-    private static final String PART_FILE_PATH = "src/main/resources/files/json/parts.json";
+    private static String PART_FILE_PATH = "src/main/resources/files/json/parts.json";
 
     private final PartsRepository partsRepository;
     private final ValidationUtils validationUtils;
@@ -65,7 +64,8 @@ public class PartsServiceImpl implements PartsService {
             }
             this.partsRepository.save(this.modelMapper.map(part, Part.class));
 
-            stringBuilder.append(String.format(SUCCESSFUL_FORMAT, PART,
+            stringBuilder.append(String.format(SUCCESSFUL_FORMAT,
+                    PART,
                     part.getPartName() + " -",
                     part.getPrice()));
         }

@@ -1,9 +1,9 @@
 package softuni.exam.models.dto;
 
-import softuni.exam.models.entity.CarType;
-
-import javax.persistence.Enumerated;
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,39 +12,49 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "car")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CarImportDto {
+
+    @NotNull
     @XmlElement
+    private String carType;
+
+
     @NotNull
     @Size(min = 2, max = 30)
+    @XmlElement
     private String carMake;
 
-    @XmlElement
     @NotNull
     @Size(min = 2, max = 30)
+    @XmlElement
     private String carModel;
 
-    @XmlElement
     @NotNull
     @Positive
+    @XmlElement
     private Integer year;
 
-    @XmlElement
     @NotNull
     @Size(min = 2, max = 30)
+    @XmlElement
     private String plateNumber;
 
-    @XmlElement
-    @Positive
     @NotNull
+    @Positive
+    @XmlElement
     private Integer kilometers;
 
-    @XmlElement
-    @DecimalMin(value = "1.00")
     @NotNull
+    @DecimalMin(value = "1.00")
+    @XmlElement
     private Double engine;
 
-    @XmlElement
-    @NotNull
-    private CarType carType;
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
+    }
 
     public String getCarMake() {
         return carMake;
@@ -92,13 +102,5 @@ public class CarImportDto {
 
     public void setEngine(Double engine) {
         this.engine = engine;
-    }
-
-    public CarType getCarType() {
-        return carType;
-    }
-
-    public void setCarType(CarType carType) {
-        this.carType = carType;
     }
 }

@@ -3,6 +3,7 @@ package softuni.exam.models.dto;
 import javax.validation.constraints.*;
 
 public class PartImportDto {
+
     @NotNull
     @Size(min = 2, max = 19)
     private String partName;
@@ -14,7 +15,7 @@ public class PartImportDto {
 
     @NotNull
     @Positive
-    private Integer quantity;
+    private String quantity;
 
     public String getPartName() {
         return partName;
@@ -32,11 +33,11 @@ public class PartImportDto {
         this.price = price;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 }

@@ -1,22 +1,19 @@
 package softuni.exam.models.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "mechanics")
 public class Mechanic extends BaseEntity {
-    //TODO:  length value higher than or equal to 2
+
     @Column(name = "first_name", nullable = false, unique = true)
     private String firstName;
 
-    //TODO:  length value higher than or equal to 2
     @Column(name = "last_name", nullable = false)
     private String lastName;
+
     @Column(nullable = false)
     private String email;
-    //TODO:  length value higher than or equal to 2
 
     @Column(unique = true)
     private String phone;
@@ -53,3 +50,4 @@ public class Mechanic extends BaseEntity {
         this.phone = phone;
     }
 }
+

@@ -5,8 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="parts")
+@Table(name = "parts")
 public class Part extends BaseEntity {
+
     @Column(name = "part_name", nullable = false, unique = true)
     private String partName;
 

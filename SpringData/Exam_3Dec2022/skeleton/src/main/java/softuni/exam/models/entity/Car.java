@@ -5,26 +5,26 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cars")
 public class Car extends BaseEntity {
+
     @Enumerated(EnumType.STRING)
     @Column(name = "car_type", nullable = false)
     private CarType carType;
 
     @Column(name = "car_make", nullable = false)
-//TODO: (between 2 to 30 inclusive).
     private String carMake;
 
     @Column(name = "car_model", nullable = false)
-//TODO: (between 2 to 30 inclusive).
     private String carModel;
 
     @Column(nullable = false)
     private Integer year;
+
     @Column(name = "plate_number", nullable = false, unique = true)
-//TODO: (between 2 to 30 inclusive).
     private String plateNumber;
 
     @Column(nullable = false)
     private Integer kilometers;
+
     @Column(nullable = false)
     private Double engine;
 

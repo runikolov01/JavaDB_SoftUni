@@ -6,18 +6,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
-@XmlRootElement(name = "cars")
+@XmlRootElement(name = "tasks")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CarsWrapperDto {
+public class TasksWrapperDto {
 
-    @XmlElement(name = "car")
-    private List<CarImportDto> cars;
+    @XmlElement(name = "task")
+    private List<TaskImportDto> tasks;
 
-    public List<CarImportDto> getCars() {
-        return cars;
+    public List<TaskImportDto> getTasks() {
+        return tasks;
     }
 
-    public void setCars(List<CarImportDto> cars) {
-        this.cars = cars;
+    public void setTasks(List<TaskImportDto> tasks) {
+        this.tasks = tasks;
     }
 }

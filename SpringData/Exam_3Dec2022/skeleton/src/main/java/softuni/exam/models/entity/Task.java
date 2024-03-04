@@ -6,7 +6,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "tasks")
-public class Task extends BaseEntity {
+public class Task extends BaseEntity{
+
     @Column(nullable = false)
     private BigDecimal price;
 
@@ -14,12 +15,12 @@ public class Task extends BaseEntity {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "mechanic_id")
-    private Mechanic mechanic;
-
-    @ManyToOne
     @JoinColumn(name = "parts_id")
     private Part part;
+
+    @ManyToOne
+    @JoinColumn(name = "mechanic_id")
+    private Mechanic mechanic;
 
     @ManyToOne
     @JoinColumn(name = "cars_id")
@@ -41,20 +42,20 @@ public class Task extends BaseEntity {
         this.date = date;
     }
 
-    public Mechanic getMechanic() {
-        return mechanic;
-    }
-
-    public void setMechanic(Mechanic mechanic) {
-        this.mechanic = mechanic;
-    }
-
     public Part getPart() {
         return part;
     }
 
     public void setPart(Part part) {
         this.part = part;
+    }
+
+    public Mechanic getMechanic() {
+        return mechanic;
+    }
+
+    public void setMechanic(Mechanic mechanic) {
+        this.mechanic = mechanic;
     }
 
     public Car getCar() {
