@@ -1,19 +1,19 @@
-package softuni.exam.models.entity;
+package softuni.exam.models.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.validation.constraints.*;
 
-@Entity
-@Table(name="parts")
-public class Part extends BaseEntity {
-    @Column(name = "part_name", nullable = false, unique = true)
+public class PartImportDto {
+    @NotNull
+    @Size(min = 2, max = 19)
     private String partName;
 
-    @Column(nullable = false)
+    @NotNull
+    @DecimalMin(value = "10.0")
+    @DecimalMax(value = "2000.0")
     private Double price;
 
-    @Column(nullable = false)
+    @NotNull
+    @Positive
     private Integer quantity;
 
     public String getPartName() {
