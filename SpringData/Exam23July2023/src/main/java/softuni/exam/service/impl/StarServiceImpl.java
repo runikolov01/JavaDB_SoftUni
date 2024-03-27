@@ -6,9 +6,12 @@ import softuni.exam.repository.StarRepository;
 import softuni.exam.service.StarService;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Service
 public class StarServiceImpl implements StarService {
+    private static String STARS_FILE_PATH = "src/main/resources/files/json/stars.json";
     private final StarRepository starRepository;
 
     @Autowired
@@ -18,12 +21,12 @@ public class StarServiceImpl implements StarService {
 
     @Override
     public boolean areImported() {
-        return false;
+        return this.starRepository.count() > 0;
     }
 
     @Override
     public String readStarsFileContent() throws IOException {
-        return null;
+        return Files.readString(Path.of(STARS_FILE_PATH));
     }
 
     @Override
