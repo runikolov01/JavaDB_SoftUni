@@ -9,6 +9,6 @@ public interface AstronomerService {
 
     String readAstronomersFromFile() throws IOException;
 
-    String importAstronomers() throws IOException, JAXBException;
+	String importAstronomers() throws IOException, JAXBException;
 
 }

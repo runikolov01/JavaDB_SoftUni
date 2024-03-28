@@ -9,5 +9,5 @@ public interface ConstellationService {
 
     String readConstellationsFromFile() throws IOException;
 
-    String importConstellations() throws IOException;
+	String importConstellations() throws IOException;
 }

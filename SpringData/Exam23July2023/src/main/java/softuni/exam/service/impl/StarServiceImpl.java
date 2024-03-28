@@ -3,7 +3,7 @@ package softuni.exam.service.impl;
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import softuni.exam.models.dto.StarSeedDto;
+import softuni.exam.models.dto.jsons.StarSeedDto;
 import softuni.exam.models.entity.Star;
 import softuni.exam.models.entity.StarType;
 import softuni.exam.repository.ConstellationRepository;
@@ -74,9 +74,9 @@ public class StarServiceImpl implements StarService {
                 .findAllByStarTypeOrderByLightYears()
                 .stream()
                 .map(s -> String.format("Star: %s\n" +
-                                "   *Distance: %.2f light years\n" +
-                                "   **Description: %s\n" +
-                                "   ***Constellation: %s\n",
+                        "   *Distance: %.2f light years\n" +
+                        "   **Description: %s\n" +
+                        "   ***Constellation: %s\n",
                         s.getName(), s.getLightYears(), s.getDescription(), s.getConstellation().getName()))
                 .collect(Collectors.joining());
     }

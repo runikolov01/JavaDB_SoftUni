@@ -1,4 +1,4 @@
-package softuni.exam.models.dto;
+package softuni.exam.models.dto.jsons;
 
 import com.google.gson.annotations.Expose;
 

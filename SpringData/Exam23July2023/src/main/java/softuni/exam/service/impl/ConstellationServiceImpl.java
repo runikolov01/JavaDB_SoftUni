@@ -3,7 +3,7 @@ package softuni.exam.service.impl;
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import softuni.exam.models.dto.ConstellationSeedDto;
+import softuni.exam.models.dto.jsons.ConstellationSeedDto;
 import softuni.exam.models.entity.Constellation;
 import softuni.exam.repository.ConstellationRepository;
 import softuni.exam.service.ConstellationService;

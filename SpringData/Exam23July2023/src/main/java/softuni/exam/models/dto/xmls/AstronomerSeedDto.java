@@ -1,4 +1,4 @@
-package softuni.exam.models.dto;
+package softuni.exam.models.dto.xmls;
 
 import softuni.exam.util.LocalDateAdapter;
 

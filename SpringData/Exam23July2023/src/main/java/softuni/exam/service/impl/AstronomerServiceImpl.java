@@ -2,8 +2,8 @@ package softuni.exam.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import softuni.exam.models.dto.AstronomerRootDto;
-import softuni.exam.models.dto.AstronomerSeedDto;
+import softuni.exam.models.dto.xmls.AstronomerRootDto;
+import softuni.exam.models.dto.xmls.AstronomerSeedDto;
 import softuni.exam.models.entity.Astronomer;
 import softuni.exam.models.entity.Star;
 import softuni.exam.repository.AstronomerRepository;
