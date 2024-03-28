@@ -21,7 +21,7 @@ import static softuni.exam.models.Constants.*;
 
 @Service
 public class BookServiceImpl implements BookService {
-    private static String BOOKS_FILE_PATH = "src/main/resources/files/json/books.json";
+    private static final String BOOKS_FILE_PATH = "src/main/resources/files/json/books.json";
     private final BookRepository bookRepository;
 
     private final ValidationUtils validationUtils;
