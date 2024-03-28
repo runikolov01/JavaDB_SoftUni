@@ -7,6 +7,8 @@ import softuni.exam.service.BorrowingRecordsService;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Service
 public class BorrowingRecordsServiceImpl implements BorrowingRecordsService {
@@ -26,7 +28,7 @@ public class BorrowingRecordsServiceImpl implements BorrowingRecordsService {
 
     @Override
     public String readBorrowingRecordsFromFile() throws IOException {
-        return null;
+        return Files.readString(Path.of(BORROWING_RECORDS_FILE_PATH));
     }
 
     @Override

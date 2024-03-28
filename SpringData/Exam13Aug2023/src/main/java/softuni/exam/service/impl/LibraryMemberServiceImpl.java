@@ -6,6 +6,8 @@ import softuni.exam.repository.LibraryMemberRepository;
 import softuni.exam.service.LibraryMemberService;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Service
 public class LibraryMemberServiceImpl implements LibraryMemberService {
@@ -24,7 +26,7 @@ public class LibraryMemberServiceImpl implements LibraryMemberService {
 
     @Override
     public String readLibraryMembersFileContent() throws IOException {
-        return null;
+        return Files.readString(Path.of(LIBRARY_MEMBER_FILE_PATH));
     }
 
     @Override

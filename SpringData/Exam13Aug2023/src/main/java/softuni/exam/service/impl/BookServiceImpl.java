@@ -6,6 +6,8 @@ import softuni.exam.repository.BookRepository;
 import softuni.exam.service.BookService;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -24,7 +26,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public String readBooksFromFile() throws IOException {
-        return null;
+        return Files.readString(Path.of(BOOKS_FILE_PATH));
     }
 
     @Override
