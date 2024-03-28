@@ -3,8 +3,10 @@ package softuni.exam.models.dto;
 import com.google.gson.annotations.Expose;
 
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-public class ConstellationDTO {
+public class ConstellationSeedDto implements Serializable {
+
     @Expose
     @Size(min = 3, max = 20)
     private String name;
@@ -12,7 +14,6 @@ public class ConstellationDTO {
     @Expose
     @Size(min = 5)
     private String description;
-
 
     public String getName() {
         return name;

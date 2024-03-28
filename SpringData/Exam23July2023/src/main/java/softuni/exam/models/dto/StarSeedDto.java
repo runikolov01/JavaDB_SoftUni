@@ -4,8 +4,10 @@ import com.google.gson.annotations.Expose;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-public class StarsDTO {
+public class StarSeedDto implements Serializable {
+
     @Expose
     @Size(min = 6)
     private String description;

@@ -2,38 +2,38 @@ package softuni.exam.service.impl;
 
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import softuni.exam.models.dto.StarsDTO;
+import softuni.exam.models.dto.StarSeedDto;
 import softuni.exam.models.entity.Star;
+import softuni.exam.models.entity.StarType;
+import softuni.exam.repository.ConstellationRepository;
 import softuni.exam.repository.StarRepository;
 import softuni.exam.service.StarService;
-import softuni.exam.util.ValidationUtils;
+import softuni.exam.util.ValidationUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static softuni.exam.models.Constants.*;
 
 @Service
 public class StarServiceImpl implements StarService {
-    private static final String STARS_FILE_PATH = "src/main/resources/files/json/stars.json";
+
+    private static final String FILE_PATH = "src/main/resources/files/json/stars.json";
+
     private final StarRepository starRepository;
-    private final ValidationUtils validationUtils;
-    private final ModelMapper modelMapper;
+    private final ConstellationRepository constellationRepository;
     private final Gson gson;
+    private final ModelMapper modelMapper;
+    private final ValidationUtil validationUtil;
 
-
-    @Autowired
-    public StarServiceImpl(StarRepository starRepository, ValidationUtils validationUtils, ModelMapper modelMapper, Gson gson) {
+    public StarServiceImpl(StarRepository starRepository, ConstellationRepository constellationRepository, Gson gson, ModelMapper modelMapper, ValidationUtil validationUtil) {
         this.starRepository = starRepository;
-        this.validationUtils = validationUtils;
-        this.modelMapper = modelMapper;
+        this.constellationRepository = constellationRepository;
         this.gson = gson;
+        this.modelMapper = modelMapper;
+        this.validationUtil = validationUtil;
     }
 
     @Override
@@ -43,29 +43,41 @@ public class StarServiceImpl implements StarService {
 
     @Override
     public String readStarsFileContent() throws IOException {
-        return Files.readString(Path.of(STARS_FILE_PATH));
+        return new String(Files.readAllBytes(Path.of(FILE_PATH)));
     }
 
     @Override
     public String importStars() throws IOException {
-        final StringBuilder stringBuilder = new StringBuilder();
-        final List<StarsDTO> stars = Arrays.stream(this.gson.fromJson(readStarsFileContent(), StarsDTO[].class)).collect(Collectors.toList());
+        StringBuilder sb = new StringBuilder();
+        StarSeedDto[] starSeedDtos = this.gson.fromJson(readStarsFileContent(), StarSeedDto[].class);
 
-        for (StarsDTO star : stars) {
-            stringBuilder.append(System.lineSeparator());
-            if (this.starRepository.findFirstByName(star.getName()).isPresent() || !this.validationUtils.isValid(star)) {
-                stringBuilder.append(String.format(INVALID_FORMAT, STAR));
+        for (StarSeedDto starSeedDto : starSeedDtos) {
+            Optional<Star> optional = this.starRepository.findByName(starSeedDto.getName());
+            if (!this.validationUtil.isValid(starSeedDto) || optional.isPresent()) {
+                sb.append("Invalid star\n");
                 continue;
             }
-            this.starRepository.save(this.modelMapper.map(star, Star.class));
-            stringBuilder.append(String.format(SUCCESSFUL_FORMAT, STAR, star.getName(), star.getLightYears() + " light years"));
+
+            Star star = this.modelMapper.map(starSeedDto, Star.class);
+            star.setStarType(StarType.valueOf(starSeedDto.getStarType()));
+            star.setConstellation(this.constellationRepository.getById(starSeedDto.getConstellation()));
+            this.starRepository.saveAndFlush(star);
+            sb.append(String.format("Successfully imported star %s - %.2f light years\n", star.getName(), star.getLightYears()));
         }
 
-        return stringBuilder.toString().trim();
+        return sb.toString();
     }
 
     @Override
     public String exportStars() {
-        return null;
+        return this.starRepository
+                .findAllByStarTypeOrderByLightYears()
+                .stream()
+                .map(s -> String.format("Star: %s\n" +
+                                "   *Distance: %.2f light years\n" +
+                                "   **Description: %s\n" +
+                                "   ***Constellation: %s\n",
+                        s.getName(), s.getLightYears(), s.getDescription(), s.getConstellation().getName()))
+                .collect(Collectors.joining());
     }
 }

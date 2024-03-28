@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface ConstellationRepository extends JpaRepository<Constellation, Long> {
-    Optional<Constellation> findFirstByName(String name);
+
+    Optional<Constellation> findByName(String name);
 }

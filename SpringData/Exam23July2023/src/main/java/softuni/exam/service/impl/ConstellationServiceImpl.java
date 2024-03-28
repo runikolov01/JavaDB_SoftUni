@@ -2,37 +2,34 @@ package softuni.exam.service.impl;
 
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import softuni.exam.models.dto.ConstellationDTO;
+import softuni.exam.models.dto.ConstellationSeedDto;
 import softuni.exam.models.entity.Constellation;
 import softuni.exam.repository.ConstellationRepository;
 import softuni.exam.service.ConstellationService;
-import softuni.exam.util.ValidationUtils;
+import softuni.exam.util.ValidationUtil;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static softuni.exam.models.Constants.*;
+import java.util.Optional;
 
 @Service
 public class ConstellationServiceImpl implements ConstellationService {
-    private static final String CONSTELLATIONS_FILE_PATH = "src/main/resources/files/json/constellations.json";
-    private final ConstellationRepository constellationRepository;
-    private final ValidationUtils validationUtils;
-    private final ModelMapper modelMapper;
-    private final Gson gson;
 
-    @Autowired
-    public ConstellationServiceImpl(ConstellationRepository constellationRepository, ValidationUtils validationUtils, ModelMapper modelMapper, Gson gson) {
+    private static final String FILE_PATH = "src/main/resources/files/json/constellations.json";
+
+    private final ConstellationRepository constellationRepository;
+    private final Gson gson;
+    private final ModelMapper modelMapper;
+    private final ValidationUtil validationUtil;
+
+    public ConstellationServiceImpl(ConstellationRepository constellationRepository, Gson gson, ModelMapper modelMapper, ValidationUtil validationUtil) {
         this.constellationRepository = constellationRepository;
-        this.validationUtils = validationUtils;
-        this.modelMapper = modelMapper;
         this.gson = gson;
+        this.modelMapper = modelMapper;
+        this.validationUtil = validationUtil;
     }
 
     @Override
@@ -42,25 +39,27 @@ public class ConstellationServiceImpl implements ConstellationService {
 
     @Override
     public String readConstellationsFromFile() throws IOException {
-        return Files.readString(Path.of(CONSTELLATIONS_FILE_PATH));
+        return new String(Files.readAllBytes(Path.of(FILE_PATH)));
     }
 
     @Override
     public String importConstellations() throws IOException {
-        final StringBuilder stringBuilder = new StringBuilder();
-        final List<ConstellationDTO> constellations = Arrays.stream(this.gson.fromJson(readConstellationsFromFile(), ConstellationDTO[].class)).collect(Collectors.toList());
+        StringBuilder sb = new StringBuilder();
+        ConstellationSeedDto[] constellationSeedDtos = this.gson.fromJson(
+                new FileReader(FILE_PATH), ConstellationSeedDto[].class);
 
-        for (ConstellationDTO constellation : constellations) {
-            stringBuilder.append(System.lineSeparator());
-
-            if (this.constellationRepository.findFirstByName(constellation.getName()).isPresent() || !this.validationUtils.isValid(constellation)) {
-                stringBuilder.append(String.format(INVALID_FORMAT, CONSTELLATION));
+        for (ConstellationSeedDto constellationSeedDto : constellationSeedDtos) {
+            Optional<Constellation> optional = this.constellationRepository.findByName(constellationSeedDto.getName());
+            if (!this.validationUtil.isValid(constellationSeedDto) || optional.isPresent()) {
+                sb.append("Invalid constellation\n");
                 continue;
             }
-            this.constellationRepository.save(this.modelMapper.map(constellation, Constellation.class));
-            stringBuilder.append(String.format(SUCCESSFUL_FORMAT, CONSTELLATION, constellation.getName(), constellation.getDescription()));
+
+            Constellation constellation = this.modelMapper.map(constellationSeedDto, Constellation.class);
+            this.constellationRepository.saveAndFlush(constellation);
+            sb.append(String.format("Successfully imported constellation %s - %s\n", constellation.getName(), constellation.getDescription()));
         }
 
-        return stringBuilder.toString().trim();
+        return sb.toString();
     }
 }
