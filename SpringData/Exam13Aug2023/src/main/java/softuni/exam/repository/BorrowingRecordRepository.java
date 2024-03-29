@@ -6,5 +6,4 @@ import softuni.exam.models.entity.BorrowingRecord;
 
 @Repository
 public interface BorrowingRecordRepository extends JpaRepository<BorrowingRecord, Long> {
-
 }
