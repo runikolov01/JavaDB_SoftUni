@@ -7,6 +7,7 @@ import softuni.exam.models.dto.BRImportDto;
 import softuni.exam.models.dto.BRWrapperDto;
 import softuni.exam.models.entity.Book;
 import softuni.exam.models.entity.BorrowingRecord;
+import softuni.exam.models.entity.GenreType;
 import softuni.exam.models.entity.LibraryMember;
 import softuni.exam.repository.BookRepository;
 import softuni.exam.repository.BorrowingRecordRepository;
@@ -20,9 +21,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static softuni.exam.models.Constants.*;
 
@@ -93,12 +96,31 @@ public class BorrowingRecordsServiceImpl implements BorrowingRecordsService {
         return sb.toString().trim();
     }
 
-
-
-
-
     @Override
     public String exportBorrowingRecords() {
-        return null;
+        LocalDate dateThreshold = LocalDate.of(2021, 9, 10); // Date threshold
+
+        List<BorrowingRecord> records = borrowingRecordRepository.findAllByBookGenreOrderByBorrowDateDesc(GenreType.SCIENCE_FICTION);
+        // Filter records before the date threshold
+        records = records.stream()
+                .filter(record -> record.getBorrowDate().isBefore(dateThreshold))
+                .collect(Collectors.toList());
+
+        StringBuilder sb = new StringBuilder();
+
+        for (BorrowingRecord record : records) {
+            String bookTitle = record.getBook().getTitle();
+            String bookAuthor = record.getBook().getAuthor();
+            LocalDate borrowDate = record.getBorrowDate();
+            String memberFirstName = record.getMember().getFirstName();
+            String memberLastName = record.getMember().getLastName();
+
+            sb.append("Book title: ").append(bookTitle).append("\n");
+            sb.append("*Book author: ").append(bookAuthor).append("\n");
+            sb.append("**Date borrowed: ").append(borrowDate).append("\n");
+            sb.append("***Borrowed by: ").append(memberFirstName).append(" ").append(memberLastName).append("\n");
+        }
+
+        return sb.toString();
     }
 }
