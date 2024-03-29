@@ -1,8 +1,7 @@
-`package softuni.exam.models.entity;
+package softuni.exam.models.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Entity
 @Table(name = "borrowing_records")
@@ -48,12 +47,11 @@ public class BorrowingRecord extends BaseEntity {
         this.remarks = remarks;
     }
 
-    public Optional<Book> getBook() {
+    public Book getBook() {
         return book;
     }
 
-
-    public void setBook(Optional<Book> book) {
+    public void setBook(Book book) {
         this.book = book;
     }
 
@@ -64,4 +62,4 @@ public class BorrowingRecord extends BaseEntity {
     public void setMember(LibraryMember member) {
         this.member = member;
     }
-}`
+}
